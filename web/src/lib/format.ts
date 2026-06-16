@@ -1,4 +1,4 @@
-// Format utilities for Wine Roam.
+// Format utilities for Bourbon Roam.
 
 // Format a vintage year (returns empty string for NV wines).
 export function formatVintage(vintage?: number): string {

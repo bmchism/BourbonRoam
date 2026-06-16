@@ -160,7 +160,7 @@ export default function Profile() {
                 <input className="field" value={p.displayName} onChange={(e) => set({ displayName: e.target.value })} placeholder={user.name ?? "Your name"} />
               </div>
               <div>
-                <div className="label">Favorite wine</div>
+                <div className="label">Favorite bourbon</div>
                 <input className="field" value={p.favorite} onChange={(e) => set({ favorite: e.target.value })} placeholder="e.g. Château Margaux 2015" />
               </div>
               <div>

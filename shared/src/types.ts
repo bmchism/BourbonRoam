@@ -1,20 +1,31 @@
 // ============================================================================
-// Wine Roam — shared domain model. Single source of truth for web + backend.
+// Bourbon Roam — shared domain model. Single source of truth for web + backend.
 // Frontend (web/) and Lambdas (functions/) both import these from @agave/shared.
 // ============================================================================
 
-export type WineType = "Red" | "White" | "Rosé" | "Sparkling" | "Dessert" | "Orange";
+export type BourbonStyle =
+  | "Straight"
+  | "Single Barrel"
+  | "Small Batch"
+  | "Bottled-in-Bond"
+  | "Wheated"
+  | "High Rye"
+  | "Barrel Proof"
+  | "Rye";
 
-// Keep Expression as alias for backward compat
-export type Expression = WineType;
+// WineType/Expression kept as aliases so existing web + backend code compiles.
+export type WineType = BourbonStyle;
+export type Expression = BourbonStyle;
 
-export const EXPRESSIONS: WineType[] = [
-  "Red",
-  "White",
-  "Rosé",
-  "Sparkling",
-  "Dessert",
-  "Orange",
+export const EXPRESSIONS: BourbonStyle[] = [
+  "Straight",
+  "Single Barrel",
+  "Small Batch",
+  "Bottled-in-Bond",
+  "Wheated",
+  "High Rye",
+  "Barrel Proof",
+  "Rye",
 ];
 
 // ---------- Catalog ----------
@@ -55,8 +66,9 @@ export interface Bottle {
   expression: Expression;
   abv: number;
   proof: number;
-  agaveRegion: string;
-  // Wine-specific fields
+  agaveRegion?: string; // legacy field, retained for back-compat with existing records
+  grapeRegion?: string; // region (e.g. "Kentucky")
+  // Style-specific fields
   producer?: string;
   wineryId?: string;
   wineType?: WineType;

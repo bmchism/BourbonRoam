@@ -70,7 +70,7 @@ export default function ChatWidget() {
             transition={{ duration: 0.2 }}
           >
             <div className="chat-head">
-              <span className="chat-title">Wine Guide</span>
+              <span className="chat-title">Bourbon Guide</span>
               <span className="chat-sub">Ask me anything about bourbon</span>
             </div>
 
