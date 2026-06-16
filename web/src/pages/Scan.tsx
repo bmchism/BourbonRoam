@@ -121,7 +121,7 @@ export default function Scan() {
                   )}
                   <div style={{ fontFamily: "var(--serif)", fontWeight: 600, fontSize: 22, marginTop: 10 }}>{match.name}</div>
                   <div className="muted" style={{ fontSize: 13.5, marginTop: 4 }}>
-                    {match.expression} · NOM {match.nom} · {match.abv}%
+                    {match.style ?? match.expression} · {match.distillery ?? match.producer} · {match.abv}%
                   </div>
                 </motion.div>
               ) : (

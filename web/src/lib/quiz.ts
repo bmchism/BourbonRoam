@@ -19,67 +19,69 @@ export function buildQuiz(bottles: Bottle[]): LocalQuizQuestion[] {
   const qs: LocalQuizQuestion[] = [];
   if (bottles.length < 2) return qs;
 
-  // Q1: which wine type is represented in the flight?
-  const types = [...new Set(bottles.map((b) => b.wineType))];
+  // Q1: which bourbon style is this bottle?
+  const styleOf = (b: Bottle) => (b.style ?? b.expression) as string;
+  const types = [...new Set(bottles.map(styleOf))];
   if (types.length > 1) {
     const target = pick(bottles, 0);
     qs.push({
-      id: "q-type",
-      text: `What type of wine is ${target.name}?`,
-      options: shuffle(["Red", "White", "Rosé", "Sparkling", "Dessert"], 0).slice(0, 4),
+      id: "q-style",
+      text: `What style of bourbon is ${target.name}?`,
+      options: dedupe([
+        styleOf(target),
+        "Straight", "Single Barrel", "Small Batch", "Bottled-in-Bond", "Wheated", "High Rye", "Barrel Proof",
+      ].filter((s) => s !== styleOf(target))).slice(0, 3).concat(styleOf(target)),
       correctIndex: -1,
-      explanation: `${target.name} is a ${target.wineType} wine.`,
+      explanation: `${target.name} is a ${styleOf(target)} bourbon.`,
     });
-    fixIndex(qs[qs.length - 1], target.wineType);
+    fixIndex(qs[qs.length - 1], styleOf(target));
   }
 
-  // Q2: Region/country match for a specific bottle
+  // Q2: Region match for a specific bottle
   const regionBottle = pick(bottles, 1);
   qs.push({
     id: "q-region",
     text: `Which region is ${regionBottle.name} from?`,
     options: dedupe([
-      regionBottle.region,
-      ...bottles.filter((b) => b.region !== regionBottle.region).map((b) => b.region),
-      "Napa Valley, California",
-      "Bordeaux, France",
-      "Barossa Valley, Australia",
-    ]).slice(0, 4),
+      regionBottle.region ?? "",
+      ...bottles.filter((b) => b.region !== regionBottle.region).map((b) => b.region ?? ""),
+      "Frankfort, Kentucky",
+      "Louisville, Kentucky",
+      "Bardstown, Kentucky",
+    ].filter(Boolean)).slice(0, 4),
     correctIndex: -1,
     explanation: `${regionBottle.name} comes from ${regionBottle.region}.`,
   });
-  fixIndex(qs[qs.length - 1], regionBottle.region);
+  fixIndex(qs[qs.length - 1], regionBottle.region ?? "");
 
-  // Q3: grape variety
-  const grapeBottle = bottles.find((b) => b.mashBill && b.mashBill.length > 0) ?? pick(bottles, 2);
-  if (grapeBottle?.mashBill && grapeBottle?.mashBill.length > 0) {
-    const mainGrape = grapeBottle?.mashBill[0];
+  // Q3: mash bill / dominant grain
+  const mashBottle = bottles.find((b) => b.mashBill && b.mashBill.length > 0) ?? pick(bottles, 2);
+  if (mashBottle?.mashBill) {
+    const mash = mashBottle.mashBill;
     qs.push({
-      id: "q-grape",
-      text: `What is the primary grape in ${grapeBottle.name}?`,
+      id: "q-mashbill",
+      text: `What best describes the mash bill of ${mashBottle.name}?`,
       options: dedupe([
-        mainGrape,
-        "Cabernet Sauvignon", "Pinot Noir", "Chardonnay", "Riesling",
-        "Merlot", "Syrah", "Nebbiolo", "Sangiovese",
-      ].filter((g) => g !== mainGrape)).slice(0, 3).concat(mainGrape),
+        mash,
+        "Wheated (corn + wheat)", "High rye (corn + extra rye)", "Traditional (corn + rye + barley)", "Four-grain",
+      ].filter((g) => g !== mash)).slice(0, 3).concat(mash),
       correctIndex: -1,
-      explanation: `${grapeBottle.name} is made from ${grapeBottle?.mashBill.join(", ")}.`,
+      explanation: `${mashBottle.name} has a mash bill of ${mash}.`,
     });
-    fixIndex(qs[qs.length - 1], mainGrape);
+    fixIndex(qs[qs.length - 1], mash);
   }
 
-  // Q4: organic/biodynamic/natural wine spotting
-  const organic = bottles.find((b) => b.organic || b.biodynamic || b.naturalWine);
-  if (organic) {
-    const label = organic.biodynamic ? "biodynamic" : organic.organic ? "organic" : "natural";
+  // Q4: Bottled-in-Bond spotting
+  const bonded = bottles.find((b) => styleOf(b) === "Bottled-in-Bond");
+  if (bonded) {
     qs.push({
-      id: "q-organic",
-      text: `Which of these wines is certified ${label}?`,
+      id: "q-bonded",
+      text: `Which of these pours is Bottled-in-Bond (100 proof, single distillery, single season, 4+ years)?`,
       options: shuffle(bottles.map((b) => b.name), 5),
       correctIndex: -1,
-      explanation: `${organic.name} is a ${label} wine.`,
+      explanation: `${bonded.name} is Bottled-in-Bond.`,
     });
-    fixIndex(qs[qs.length - 1], organic.name);
+    fixIndex(qs[qs.length - 1], bonded.name);
   }
 
   // Q5: ABV of the flight's strongest

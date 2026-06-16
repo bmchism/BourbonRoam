@@ -2,24 +2,24 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import AppBar from "../components/AppBar";
-import { wineries } from "../data/wineries";
-import { GrapeIcon } from "../icons";
+import { distilleries } from "../data/distilleries";
+import { BarrelIcon } from "../icons";
 
-const all = Object.values(wineries);
+const all = Object.values(distilleries);
 const countries = [...new Set(all.map((w) => w.country || "Other"))].sort();
 
-export default function Wineries() {
+export default function Distilleries() {
   const [filter, setFilter] = useState("All");
   const shown = filter === "All" ? all : all.filter((w) => (w.country || "Other") === filter);
 
   return (
     <>
-      <AppBar title="Wineries" back />
+      <AppBar title="Distilleries" back />
       <main className="screen">
         <div className="page-title">
           <span className="kicker">Meet the producers</span>
-          <h1>World Wineries</h1>
-          <p>From Bordeaux châteaux to Napa estates — the people and places behind the bottles.</p>
+          <h1>Bourbon Distilleries</h1>
+          <p>From Buffalo Trace to Heaven Hill — the people and places behind the bottles.</p>
         </div>
 
         <div className="chips">
@@ -37,10 +37,10 @@ export default function Wineries() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.03 }}
             >
-              <Link to={`/winery/${w.id}`} className="card tap" style={{ display: "block" }}>
+              <Link to={`/distillery/${w.id}`} className="card tap" style={{ display: "block" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                   <span style={{ width: 40, height: 40, borderRadius: 10, background: "linear-gradient(150deg, #722F37, #4a1c22)", display: "grid", placeItems: "center", color: "#fff", flexShrink: 0 }}>
-                    <GrapeIcon size={20} />
+                    <BarrelIcon size={20} />
                   </span>
                   <div style={{ minWidth: 0 }}>
                     <div style={{ fontFamily: "var(--serif)", fontWeight: 600, fontSize: 16 }}>{w.name}</div>

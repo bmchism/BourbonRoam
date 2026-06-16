@@ -25,8 +25,8 @@ import Home from "./pages/Home";
 const Learn = lazy(() => import("./pages/Learn"));
 const LearnArticle = lazy(() => import("./pages/LearnArticle"));
 const Process = lazy(() => import("./pages/Process"));
-const Wineries = lazy(() => import("./pages/Wineries"));
-const WineryDetail = lazy(() => import("./pages/WineryDetail"));
+const Distilleries = lazy(() => import("./pages/Distilleries"));
+const DistilleryDetail = lazy(() => import("./pages/DistilleryDetail"));
 const Catalog = lazy(() => import("./pages/Catalog"));
 const BottleDetail = lazy(() => import("./pages/BottleDetail"));
 const Scan = lazy(() => import("./pages/Scan"));
@@ -117,8 +117,8 @@ export default function App() {
         <Route path="/home" element={<RequireAuth><Home /></RequireAuth>} />
         <Route path="/learn" element={<RequireAuth><Learn /></RequireAuth>} />
         <Route path="/learn/process" element={<RequireAuth><Process /></RequireAuth>} />
-        <Route path="/learn/wineries" element={<RequireAuth><Wineries /></RequireAuth>} />
-        <Route path="/winery/:id" element={<RequireAuth><WineryDetail /></RequireAuth>} />
+        <Route path="/learn/distilleries" element={<RequireAuth><Distilleries /></RequireAuth>} />
+        <Route path="/distillery/:id" element={<RequireAuth><DistilleryDetail /></RequireAuth>} />
         <Route path="/learn/:slug" element={<RequireAuth><LearnArticle /></RequireAuth>} />
         <Route path="/catalog" element={<RequireAuth><Catalog /></RequireAuth>} />
         <Route path="/scan" element={<RequireAuth><Scan /></RequireAuth>} />

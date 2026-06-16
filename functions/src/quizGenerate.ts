@@ -12,7 +12,7 @@ interface GenEvent {
   bottleIds: string[];
 }
 
-const SYSTEM = `You write fun, fair multiple-choice tasting-quiz questions about specific wines.
+const SYSTEM = `You write fun, fair multiple-choice tasting-quiz questions about specific bourbons.
 Return ONLY JSON: {"questions":[{"text":string,"options":[string,string,string,string],"correctIndex":number,"explanation":string}]}
 Base every question on the provided bottle facts. 4 options each, exactly one correct. 5 questions.`;
 
@@ -26,10 +26,10 @@ export const handler = async (event: GenEvent): Promise<Quiz> => {
   const facts = bottles
     .map(
       (b) =>
-        `- ${b.name}: ${b.expression}, NOM ${b.nom}, ${b.abv}%, ${b.grapeRegion}` +
-        (b.crushing ? `, crush: ${b.crushing}` : "") +
-        (b.aging ? `, aging: ${b.aging}` : "") +
-        (b.additiveFree ? ", additive-free" : "")
+        `- ${b.name}: ${b.expression}, ${b.distillery}, ${b.abv}%, ${b.region ?? "Kentucky"}` +
+        (b.mashBill ? `, mash bill: ${b.mashBill}` : "") +
+        (b.age ? `, age: ${b.age}` : "") +
+        (b.aging ? `, aging: ${b.aging}` : "")
     )
     .join("\n");
 

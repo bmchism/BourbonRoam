@@ -103,9 +103,9 @@ export default function JoinLive() {
         {bottle ? (
           <>
             <div className="hero" style={{ background: `linear-gradient(150deg, ${bottle.accent}, ${bottle.accent})`, marginTop: 12 }}>
-              <span className="pill" style={{ background: "rgba(255,255,255,.22)" }}><span className="dot" />{bottle.wineType}</span>
+              <span className="pill" style={{ background: "rgba(255,255,255,.22)" }}><span className="dot" />{bottle.style}</span>
               <div className="brand">{bottle.name}</div>
-              <div className="nom">{bottle.producer} · {bottle.abv}% · {bottle.region}</div>
+              <div className="hero-sub">{bottle.producer} · {bottle.abv}% · {bottle.region}</div>
             </div>
             <div className="section-head"><span className="kicker">Your score</span><h2>Rate this pour</h2></div>
             <div className="card">

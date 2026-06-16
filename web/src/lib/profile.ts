@@ -1,5 +1,5 @@
 // User profile extras (display name override, phone for notifications, favorite
-// wine). Stored per-user locally; phone opts into SMS notifications.
+// bourbon). Stored per-user locally; phone opts into SMS notifications.
 export interface Profile {
   displayName: string;
   phone: string;

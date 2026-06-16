@@ -20,7 +20,7 @@ const SORTS: { v: Sort; label: string }[] = [
   { v: "za", label: "Name Z–A" },
   { v: "abv-desc", label: "ABV high → low" },
   { v: "abv-asc", label: "ABV low → high" },
-  { v: "expr", label: "By wine type" },
+  { v: "expr", label: "By style" },
 ];
 
 const exprIndex = (e: Expression) => EXPRESSIONS.indexOf(e);
@@ -67,7 +67,7 @@ export default function Catalog() {
     const countryMap: Record<string, number> = {};
     const regionMap: Record<string, number> = {};
     for (const b of all) {
-      const r = b.grapeRegion || b.agaveRegion || "";
+      const r = b.region || "";
       if (!r) continue;
       const parts = r.split(",").map((s) => s.trim());
       if (parts.length >= 2) {
@@ -89,14 +89,14 @@ export default function Catalog() {
   const list = useMemo(() => {
     const needle = q.trim().toLowerCase();
     let out = all.filter((b) => {
-      const wineType = b.wineType || b.expression || "";
-      if (active !== "All" && wineType !== active) return false;
-      if (afOnly && !b.organic && !b.additiveFree) return false;
+      const style = b.style || b.expression || "";
+      if (active !== "All" && style !== active) return false;
+      if (afOnly && style !== "Bottled-in-Bond") return false;
       if (favOnly && !favs.has(b.id)) return false;
-      const r = b.grapeRegion || b.agaveRegion || "";
+      const r = b.region || "";
       if (country !== "All" && !r.toLowerCase().includes(country.toLowerCase())) return false;
       if (region !== "All" && !r.toLowerCase().includes(region.toLowerCase())) return false;
-      if (needle && !`${b.name} ${b.brand || ""} ${b.nom || ""} ${r}`.toLowerCase().includes(needle)) return false;
+      if (needle && !`${b.name} ${b.brand || ""} ${b.producer || ""} ${b.mashBill || ""} ${r}`.toLowerCase().includes(needle)) return false;
       return true;
     });
     out = [...out].sort((a, b) => {
@@ -104,7 +104,7 @@ export default function Catalog() {
         case "za": return b.name.localeCompare(a.name);
         case "abv-desc": return (b.abv || 0) - (a.abv || 0) || a.name.localeCompare(b.name);
         case "abv-asc": return (a.abv || 0) - (b.abv || 0) || a.name.localeCompare(b.name);
-        case "expr": return exprIndex(a.wineType || a.expression || "Red") - exprIndex(b.wineType || b.expression || "Red") || a.name.localeCompare(b.name);
+        case "expr": return exprIndex(a.style || a.expression || "Straight") - exprIndex(b.style || b.expression || "Straight") || a.name.localeCompare(b.name);
         case "pop": return (pop.get(b.id) ?? 0) - (pop.get(a.id) ?? 0) || a.name.localeCompare(b.name);
         default: return a.name.localeCompare(b.name);
       }
@@ -112,7 +112,7 @@ export default function Catalog() {
     return out;
   }, [all, active, q, sort, afOnly, favOnly, country, region, favs, pop]);
 
-  const afCount = useMemo(() => all.filter((b) => b.organic || b.additiveFree).length, [all]);
+  const afCount = useMemo(() => all.filter((b) => (b.style || b.expression) === "Bottled-in-Bond").length, [all]);
 
   return (
     <>
@@ -122,8 +122,8 @@ export default function Catalog() {
           <span className="kicker">The Catalog{live ? " · live" : ""}</span>
           <h1>Explore Bourbons</h1>
           <p>
-            {all.length} wines across every style. Search, filter, and sort —
-            the 🍇 badge marks organic and biodynamic bottles.
+            {all.length} bottles across every style. Search, filter, and sort —
+            the 🏛️ badge marks Bottled-in-Bond bottles.
           </p>
         </div>
 
@@ -136,8 +136,8 @@ export default function Catalog() {
         <input
           className="field"
           style={{ marginTop: 12 }}
-          aria-label="Search wines"
-          placeholder="Search producer, region, grape…"
+          aria-label="Search bottles"
+          placeholder="Search distillery, region, mash bill…"
           value={q}
           onChange={(e) => setQ(e.target.value)}
         />
@@ -155,7 +155,7 @@ export default function Catalog() {
         </div>
 
         <div className="catalog-controls">
-          <select className="select-mini" aria-label="Sort wines" value={sort} onChange={(e) => setSort(e.target.value as Sort)}>
+          <select className="select-mini" aria-label="Sort bottles" value={sort} onChange={(e) => setSort(e.target.value as Sort)}>
             {SORTS.map((s) => (
               <option key={s.v} value={s.v}>{s.label}</option>
             ))}
@@ -172,7 +172,7 @@ export default function Catalog() {
         </div>
         <div className="catalog-controls" style={{ marginTop: 6 }}>
           <button className={`chip tap${afOnly ? " active" : ""}`} onClick={() => setAfOnly((v) => !v)}>
-            🍇 Organic{afCount ? ` · ${afCount}` : ""}
+            🏛️ Bottled-in-Bond{afCount ? ` · ${afCount}` : ""}
           </button>
           <button className={`chip tap${favOnly ? " active" : ""}`} onClick={() => setFavOnly((v) => !v)}>
             ★ Favorites

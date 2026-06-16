@@ -1,13 +1,12 @@
-# AppSync schema for Wine Roam. Auth directives applied via CDK defaults.
+# AppSync schema for Bourbon Roam. Auth directives applied via CDK defaults.
 
-type Winery {
+type Distillery {
   id: ID!
   name: String!
   region: String!
-  appellation: String
   country: String
-  winemaker: String
-  grapes: [String!]
+  masterDistiller: String
+  otherBrands: [String!]
   notes: String
   website: String
 }
@@ -21,18 +20,22 @@ type Bottle @aws_api_key @aws_cognito_user_pools {
   id: ID!
   brand: String!
   name: String!
-  nom: String!
+  distillery: String!
   expression: String!
   abv: Float!
   proof: Float
-  agaveRegion: String
-  grapeRegion: String
+  region: String
+  producer: String
+  distilleryId: String
+  style: String
+  age: String
+  mashBill: String
+  country: String
   waterSource: String
   fermentation: String
   stillType: String
-  crushing: String
   distillation: String
-  cooking: String
+  charLevel: String
   aging: String
   aromas: [String!]!
   flavors: [String!]!
@@ -40,7 +43,7 @@ type Bottle @aws_api_key @aws_cognito_user_pools {
   story: String
   accent: String!
   verified: Boolean
-  additiveFree: Boolean
+  imageUrl: String
   imageKeys: [String!]
   sources: [SourceLink!]
   createdAt: String
@@ -158,10 +161,14 @@ input FlightInput {
 }
 input BottlePatch {
   verified: Boolean
-  nom: String
+  distillery: String
+  distilleryId: String
+  region: String
+  mashBill: String
+  age: String
+  style: String
   abv: Float
   expression: String
-  additiveFree: Boolean
 }
 
 type ShelfItem @aws_cognito_user_pools {

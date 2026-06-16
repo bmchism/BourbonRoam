@@ -70,7 +70,7 @@ export default function SharedFlight() {
               <span className="pn" style={{ background: b.accent }}>{i + 1}</span>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div className="pnm">{b.name}</div>
-                <div className="psub">{b.wineType}{b.vintage ? ` ${b.vintage}` : ""} · {b.region} · {b.abv}%</div>
+                <div className="psub">{b.style ?? b.expression}{b.age ? ` ${b.age}` : ""} · {b.region} · {b.abv}%</div>
               </div>
             </motion.div>
           ))}

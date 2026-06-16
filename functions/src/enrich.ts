@@ -3,12 +3,12 @@ import { callTiered, extractJson, type Tier } from "./lib/anthropic.js";
 import { putItem, getItem } from "./lib/ddb.js";
 import { keys, cacheKeyFor } from "./lib/keys.js";
 
-// bottle-enrich: turn a hint (brand/NOM, or a label photo) into a structured,
-// additive-aware Bottle profile via tiered Claude, then persist + cache it.
+// bottle-enrich: turn a hint (brand/distillery, or a label photo) into a
+// structured Bottle profile via tiered Claude, then persist + cache it.
 // Invoked by the Step Functions pipeline (recognize) and the pre-warm batch.
 
 export interface EnrichEvent {
-  hint?: { brand: string; expression?: Expression; nom?: string };
+  hint?: { brand: string; expression?: Expression; distillery?: string };
   imageBase64?: string;
   imageMediaType?: "image/jpeg" | "image/png" | "image/gif" | "image/webp";
   imageKey?: string;
@@ -19,28 +19,26 @@ Given a bourbon brand/distillery hint, return ONLY a JSON object for the bottle.
 Be accurate and conservative: if you are unsure of a field, omit it rather than guess.
 JSON shape:
 {
-  "brand": string (producer name), "name": string (full wine name), "nom": string (region/appellation),
+  "brand": string (brand name), "name": string (full bottle name),
+  "distillery": string (producing distillery, e.g. "Buffalo Trace"),
   "expression": "Straight"|"Single Barrel"|"Small Batch"|"Bottled-in-Bond"|"Wheated"|"High Rye"|"Barrel Proof"|"Rye",
-  "abv": number, "grapeRegion": string (full region e.g. "Napa Valley, California"),
+  "abv": number, "region": string (e.g. "Kentucky"),
+  "mashBill"?: string (e.g. "Wheated" or "75% corn, 13% rye, 12% malted barley"),
+  "age"?: string (age statement, e.g. "10 Year" or "NAS"),
   "aging"?: string, "aromas": string[], "flavors": string[],
   "tastingNotes"?: string, "story"?: string,
-  "additiveFree"?: boolean (true only if certified organic/biodynamic), "confidence": number (0-1)
+  "confidence": number (0-1)
 }`;
 
 const ACCENTS: Record<string, string> = {
-  Red: "#722F37",
-  White: "#C9A24B",
-  "Rosé": "#E8A0BF",
-  Sparkling: "#9AA7B2",
-  Dessert: "#D4A574",
-  Orange: "#CC7722",
-  // Legacy tequila accents (fallback)
-  Blanco: "#7FA15A",
-  "High Proof Blanco": "#5E8C4E",
-  Reposado: "#C28A3D",
-  "Añejo": "#A66A33",
-  "Extra Añejo": "#8C4A2F",
-  Cristalino: "#9AA7B2",
+  Straight: "#8C4A2F",
+  "Single Barrel": "#A66A33",
+  "Small Batch": "#B5651D",
+  "Bottled-in-Bond": "#7A3B1E",
+  Wheated: "#C28A3D",
+  "High Rye": "#9A5A2A",
+  "Barrel Proof": "#6E2F1A",
+  Rye: "#5E3A1E",
 };
 
 interface RawBottle extends Partial<Bottle> {
@@ -79,31 +77,31 @@ export const handler = async (event: EnrichEvent): Promise<Bottle> => {
     throw new Error(`enrich: could not parse a bottle (tier ${tier})`);
   }
 
-  const nom = raw.nom ? normalizeNom(raw.nom) : (raw.grapeRegion ?? "Unknown");
-  const id = slug(`${raw.brand}-${raw.expression}-${raw.name ?? nom}`);
+  const distillery = raw.distillery ? raw.distillery.trim() : (raw.brand ?? "Unknown");
+  const id = slug(`${raw.brand}-${raw.expression}-${raw.name ?? distillery}`);
   const now = new Date().toISOString();
   const bottle: Bottle = {
     id,
     brand: raw.brand,
     name: raw.name ?? `${raw.brand} ${raw.expression}`,
-    nom,
+    distillery,
     expression: raw.expression,
     abv: raw.abv ?? 40,
     proof: Math.round((raw.abv ?? 40) * 2),
-    grapeRegion: raw.grapeRegion ?? "Unknown",
+    region: raw.region ?? "Kentucky",
+    mashBill: raw.mashBill,
+    age: raw.age,
     waterSource: raw.waterSource,
     fermentation: raw.fermentation,
     stillType: raw.stillType,
-    crushing: raw.crushing,
     distillation: raw.distillation,
-    cooking: raw.cooking,
+    charLevel: raw.charLevel,
     aging: raw.aging,
     aromas: raw.aromas ?? [],
     flavors: raw.flavors ?? [],
     tastingNotes: raw.tastingNotes,
     story: raw.story,
-    accent: ACCENTS[raw.expression] ?? "#722F37",
-    additiveFree: raw.additiveFree,
+    accent: ACCENTS[raw.expression] ?? "#8C4A2F",
     verified: false, // generated — awaits admin review
     imageKeys: event.imageKey ? [event.imageKey] : undefined,
     createdAt: now,
@@ -119,7 +117,7 @@ export const handler = async (event: EnrichEvent): Promise<Bottle> => {
     gsi1sk: bottle.name,
     enrichTier: tier,
   });
-  const ck = cacheKeyFor(bottle.nom, bottle.brand);
+  const ck = cacheKeyFor(bottle.distillery, bottle.brand);
   await putItem({ ...keys.cache(ck), bottleId: bottle.id, type: "CachePtr" });
 
   // When this enrich came from a label scan, drop a pointer keyed by the image
@@ -133,26 +131,18 @@ export const handler = async (event: EnrichEvent): Promise<Bottle> => {
 
 function buildUserText(e: EnrichEvent): string {
   if (e.hint) {
-    const { brand, expression, nom } = e.hint;
+    const { brand, expression, distillery } = e.hint;
     return `Build the catalog entry for: ${brand}${expression ? " " + expression : ""}${
-      nom ? ` (NOM ${nom})` : ""
+      distillery ? ` (distillery ${distillery})` : ""
     }. Return only JSON.`;
   }
-  return "Identify the wine in this label photo and return only the JSON catalog entry.";
+  return "Identify the bourbon in this label photo and return only the JSON catalog entry.";
 }
 
 // Check the cache before enriching (used by recognize/prewarm to skip work).
-// Canonicalize a NOM string so the same winery never splits across format
-// variants ("NOM 1414", "NOM-1414", "1414" -> "1414"). Strips a leading "NOM"
-// token, all non-digits, and leading zeros. Falls back to the digit string if
-// stripping leaves it empty.
-export function normalizeNom(nom: string): string {
-  const digits = nom.replace(/^nom/i, "").replace(/\D/g, "");
-  return digits.replace(/^0+/, "") || digits || nom;
-}
-
-export async function cachedBottle(nom: string, brand: string): Promise<Bottle | null> {
-  const ptr = await getItem<{ bottleId: string }>(keys.cache(cacheKeyFor(nom, brand)));
+// Keyed by distillery + brand so the same bottle never re-hits Claude.
+export async function cachedBottle(distillery: string, brand: string): Promise<Bottle | null> {
+  const ptr = await getItem<{ bottleId: string }>(keys.cache(cacheKeyFor(distillery, brand)));
   if (!ptr?.bottleId) return null;
   const b = await getItem<Bottle>(keys.bottle(ptr.bottleId));
   return b ?? null;
@@ -162,7 +152,7 @@ function slug(s: string): string {
   return s
     .toLowerCase()
     .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "") // strip combining diacritics (e.g. Añejo)
+    .replace(/[̀-ͯ]/g, "") // strip combining diacritics
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
 }

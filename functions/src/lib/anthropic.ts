@@ -129,7 +129,7 @@ export async function callTiered(
   return { text: last, tier: ladder[ladder.length - 1] };
 }
 
-// Multi-turn chat completion (used by the tequila assistant). System block is
+// Multi-turn chat completion (used by the bourbon assistant). System block is
 // cached; messages carry the conversation. Returns the assistant's text.
 export async function chat(
   system: string,

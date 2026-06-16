@@ -57,7 +57,7 @@ async function sendTestPush(uid: string): Promise<boolean> {
   if (!(await ensureVapid())) return false;
   const subs = await queryPartition<any>(`USER#${uid}`, "PUSHSUB#");
   if (!subs.length) return false;
-  const payload = JSON.stringify({ title: "🌿 Tequila Roam", body: "Push notifications are working — salud!", url: "/home" });
+  const payload = JSON.stringify({ title: "🥃 Bourbon Roam", body: "Push notifications are working — cheers!", url: "/home" });
   let ok = false;
   for (const s of subs) {
     try {
@@ -395,7 +395,7 @@ const ANALYTICS_EVENTS = new Set([
 // these to keep the partition bounded and store no per-user browsing path.
 const PAGE_KEYS = new Set([
   "/", "/home", "/learn", "/learn/process", "/learn/distilleries", "/learn/:slug",
-  "/distillery/:nom", "/catalog", "/bottle/:id", "/scan", "/tastings",
+  "/distillery/:id", "/catalog", "/bottle/:id", "/scan", "/tastings",
   "/tastings/build", "/flight/:id", "/taste/:id/setup", "/taste/:id",
   "/taste/:id/quiz", "/taste/:id/recap", "/host/:id", "/join/:code", "/shared",
   "/profile", "/admin", "/about", "/faq", "/privacy", "/terms", "/responsible",
@@ -532,8 +532,9 @@ async function setReviewModeration(bottleId: string, userId: string, decision: s
 }
 
 const ACCENTS: Record<string, string> = {
-  Blanco: "#7FA15A", "High Proof Blanco": "#5E8C4E", Reposado: "#C28A3D",
-  "Añejo": "#A66A33", "Extra Añejo": "#8C4A2F", Cristalino: "#9AA7B2",
+  Straight: "#8C4A2F", "Single Barrel": "#A66A33", "Small Batch": "#B5651D",
+  "Bottled-in-Bond": "#7A3B1E", Wheated: "#C28A3D", "High Rye": "#9A5A2A",
+  "Barrel Proof": "#6E2F1A", Rye: "#5E3A1E",
 };
 // Admin edit of an enriched bottle (verify/correct fields).
 async function adminPatchBottle(id: string, patch: any): Promise<Bottle> {
@@ -541,8 +542,10 @@ async function adminPatchBottle(id: string, patch: any): Promise<Bottle> {
   if (!b) throw new Error("bottle not found");
   const next: Bottle = { ...b };
   if (typeof patch.verified === "boolean") next.verified = patch.verified;
-  if (typeof patch.additiveFree === "boolean") next.additiveFree = patch.additiveFree;
-  if (patch.nom) next.nom = String(patch.nom);
+  if (patch.distillery) next.distillery = String(patch.distillery);
+  if (patch.region) next.region = String(patch.region);
+  if (patch.mashBill) next.mashBill = String(patch.mashBill);
+  if (patch.age) next.age = String(patch.age);
   if (typeof patch.abv === "number") { next.abv = patch.abv; next.proof = Math.round(patch.abv * 2); }
   if (patch.expression && ACCENTS[patch.expression]) { next.expression = patch.expression; next.accent = ACCENTS[patch.expression]; }
   next.updatedAt = new Date().toISOString();

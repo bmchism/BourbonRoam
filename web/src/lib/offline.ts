@@ -14,7 +14,7 @@ export interface QueuedWrite<T = any> {
   queuedAt: string;
 }
 
-const KEY = "agave.writeQueue";
+const KEY = "bourbon.writeQueue";
 
 function read(): QueuedWrite[] {
   try {
@@ -25,7 +25,7 @@ function read(): QueuedWrite[] {
 }
 function write(items: QueuedWrite[]) {
   localStorage.setItem(KEY, JSON.stringify(items));
-  window.dispatchEvent(new Event("agave-queue"));
+  window.dispatchEvent(new Event("bourbon-queue"));
 }
 
 let counter = 0;
@@ -100,11 +100,11 @@ export function useSyncStatus() {
     const q = () => setPending(pendingCount());
     window.addEventListener("online", on);
     window.addEventListener("offline", off);
-    window.addEventListener("agave-queue", q);
+    window.addEventListener("bourbon-queue", q);
     return () => {
       window.removeEventListener("online", on);
       window.removeEventListener("offline", off);
-      window.removeEventListener("agave-queue", q);
+      window.removeEventListener("bourbon-queue", q);
     };
   }, []);
 

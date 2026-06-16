@@ -1,86 +1,81 @@
-// Canonical domain types for Bourbon Roam.
+// Canonical domain types for Bourbon Roam (web).
+// Mirrors shared/src/types.ts — the single source of truth.
 
-export type BourbonStyle = "Straight" | "Single Barrel" | "Small Batch" | "Bottled-in-Bond" | "Wheated" | "High Rye" | "Barrel Proof" | "Rye";
+export type BourbonStyle =
+  | "Straight"
+  | "Single Barrel"
+  | "Small Batch"
+  | "Bottled-in-Bond"
+  | "Wheated"
+  | "High Rye"
+  | "Barrel Proof"
+  | "Rye";
 
-// Keep Expression as an alias so existing code (Catalog filters, etc.) still compiles.
+// Expression is the bourbon style category (alias kept for the tasting engine,
+// which is spirit-agnostic and refers to a bottle's category as its "expression").
 export type Expression = BourbonStyle;
-export type WineType = BourbonStyle;
 
-// The ordered list of wine types (replaces tequila EXPRESSIONS constant).
-export const EXPRESSIONS: BourbonStyle[] = ["Straight", "Single Barrel", "Small Batch", "Bottled-in-Bond", "Wheated", "High Rye", "Barrel Proof", "Rye"];
+export const EXPRESSIONS: BourbonStyle[] = [
+  "Straight",
+  "Single Barrel",
+  "Small Batch",
+  "Bottled-in-Bond",
+  "Wheated",
+  "High Rye",
+  "Barrel Proof",
+  "Rye",
+];
 
 export interface Distillery {
   id: string;
   name: string;
-  region: string;
-  appellation?: string;
+  region: string; // e.g. "Frankfort, Kentucky"
   country?: string;
   masterDistiller?: string;
-  mashBill?: string[];
+  otherBrands?: string[];
   notes?: string;
   website?: string;
 }
 
+export interface SourceLink {
+  label: string;
+  url: string;
+}
+
 export interface Bottle {
   id: string;
-  /** Producer / brand name */
-  producer: string;
-  /** Full wine name */
+  brand: string;
   name: string;
-  /** Distillery ID (replaces NOM) */
-  wineryId: string;
-  /** Wine type (Red, White, Rosé, etc.) */
-  wineType: BourbonStyle;
-  vintage?: number;
+  distillery: string; // producing distillery, e.g. "Buffalo Trace"
+  expression: Expression;
   abv: number;
-  /** Wine region */
-  region: string;
-  appellation?: string;
+  proof: number;
+  region?: string; // e.g. "Kentucky"
+  // Style / production
+  producer?: string;
+  distilleryId?: string;
+  style?: BourbonStyle;
+  age?: string; // age statement, e.g. "10 Year" or "NAS"
+  mashBill?: string; // e.g. "Wheated" or "75% corn, 13% rye, 12% malted barley"
   country?: string;
-  mashBill?: string[];
-  aging?: string;
-  vinification?: string;
-  soil?: string;
-  climate?: string;
+  waterSource?: string;
+  fermentation?: string;
+  stillType?: string;
+  distillation?: string;
+  charLevel?: string; // barrel char level, e.g. "#4 (alligator char)"
+  aging?: string; // maturation, e.g. "Aged 6 years in new charred oak"
+  // Sensory
   aromas: string[];
   flavors: string[];
   tastingNotes?: string;
   story?: string;
   accent: string;
   verified?: boolean;
-  organic?: boolean;
-  biodynamic?: boolean;
-  naturalWine?: boolean;
+  imageUrl?: string;
   imageKeys?: string[];
-  sources?: { label: string; url: string }[];
+  sources?: SourceLink[];
   createdAt?: string;
   updatedAt?: string;
-
-  // ---- Backward-compat aliases (mapped from wine fields in data layer) ----
-  // These let existing components compile until they're individually updated.
-  /** @deprecated use producer */
-  brand: string;
-  /** @deprecated use wineryId */
-  nom: string;
-  /** @deprecated use wineType */
-  expression: BourbonStyle;
-  /** @deprecated use region */
-  agaveRegion: string;
-  /** Region from enrichment */
-  grapeRegion?: string;
-  /** @deprecated use organic */
-  additiveFree?: boolean;
-  /** Proof (2x ABV) */
-  proof: number;
-  // Legacy production fields (mapped to generic values)
-  waterSource?: string;
-  fermentation?: string;
-  stillType?: string;
-  crushing?: string;
-  distillation?: string;
-  cooking?: string;
-  /** Runtime image URL (populated from imageKeys or upload) */
-  imageUrl?: string;
 }
 
 export interface Review {
@@ -143,7 +138,6 @@ export interface LearnArticle {
   kicker: string;
   sections: { heading: string; body: string }[];
 }
-
 
 // Session pacing + visibility options
 export type Pacing = "host" | "self";

@@ -10,8 +10,9 @@ import { bottles as seedBottles, bottleById as seedById } from "../data/bottles"
 const client = () => generateClient();
 
 const BOTTLE_FIELDS = `
-  id brand name nom expression abv proof agaveRegion grapeRegion
-  aging aromas flavors tastingNotes story accent verified additiveFree imageKeys
+  id brand name distillery expression abv proof region
+  producer distilleryId style age mashBill country charLevel
+  aging aromas flavors tastingNotes story accent verified imageKeys
 `;
 
 async function run<T>(query: string, variables: Record<string, unknown> = {}, authMode: "apiKey" | "userPool" = "apiKey"): Promise<T> {
@@ -444,7 +445,7 @@ export async function adminUserAction(username: string, action: AdminUserActionN
     "userPool"
   );
 }
-export async function adminPatchBottle(id: string, patch: { verified?: boolean; nom?: string; abv?: number; expression?: string; additiveFree?: boolean }): Promise<void> {
+export async function adminPatchBottle(id: string, patch: { verified?: boolean; distilleryId?: string; abv?: number; expression?: string; style?: string }): Promise<void> {
   await run(`mutation($id: ID!, $p: BottlePatch!) { adminPatchBottle(id: $id, patch: $p) { id } }`, { id, p: patch }, "userPool");
 }
 export async function adminDeleteBottle(id: string): Promise<void> {
@@ -556,7 +557,7 @@ export async function sendRecap(opts: {
   return data.sendRecap;
 }
 
-// ---- Wine assistant ----
+// ---- Bourbon assistant ----
 export async function askChat(
   message: string,
   history: { role: "user" | "assistant"; content: string }[]

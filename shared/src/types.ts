@@ -13,8 +13,8 @@ export type BourbonStyle =
   | "Barrel Proof"
   | "Rye";
 
-// WineType/Expression kept as aliases so existing web + backend code compiles.
-export type WineType = BourbonStyle;
+// Expression is the bourbon style category (alias kept for the tasting engine,
+// which is spirit-agnostic and refers to a bottle's category as its "expression").
 export type Expression = BourbonStyle;
 
 export const EXPRESSIONS: BourbonStyle[] = [
@@ -31,24 +31,12 @@ export const EXPRESSIONS: BourbonStyle[] = [
 // ---------- Catalog ----------
 
 export interface Distillery {
-  nom: string;
-  name: string;
-  location: string;
-  masterDistiller?: string;
-  altitude?: string;
-  otherBrands?: string[];
-  notes?: string;
-  website?: string;
-}
-
-export interface Winery {
   id: string;
   name: string;
-  region: string;
-  appellation?: string;
+  region: string; // e.g. "Frankfort, Kentucky"
   country?: string;
-  winemaker?: string;
-  grapes?: string[];
+  masterDistiller?: string;
+  otherBrands?: string[];
   notes?: string;
   website?: string;
 }
@@ -62,42 +50,31 @@ export interface Bottle {
   id: string;
   brand: string;
   name: string;
-  nom: string;
+  distillery: string; // producing distillery, e.g. "Buffalo Trace"
   expression: Expression;
   abv: number;
   proof: number;
-  agaveRegion?: string; // legacy field, retained for back-compat with existing records
-  grapeRegion?: string; // region (e.g. "Kentucky")
-  // Style-specific fields
+  region?: string; // e.g. "Kentucky"
+  // Style / production
   producer?: string;
-  wineryId?: string;
-  wineType?: WineType;
-  vintage?: number;
-  region?: string;
-  appellation?: string;
+  distilleryId?: string;
+  style?: BourbonStyle;
+  age?: string; // age statement, e.g. "10 Year" or "NAS"
+  mashBill?: string; // e.g. "Wheated" or "75% corn, 13% rye, 12% malted barley"
   country?: string;
-  grapes?: string[];
-  vinification?: string;
-  soil?: string;
-  climate?: string;
-  organic?: boolean;
-  biodynamic?: boolean;
-  naturalWine?: boolean;
-  // Shared fields
   waterSource?: string;
   fermentation?: string;
   stillType?: string;
-  crushing?: string;
   distillation?: string;
-  cooking?: string;
-  aging?: string;
+  charLevel?: string; // barrel char level, e.g. "#4 (alligator char)"
+  aging?: string; // maturation, e.g. "Aged 6 years in new charred oak"
+  // Sensory
   aromas: string[];
   flavors: string[];
   tastingNotes?: string;
   story?: string;
   accent: string;
   verified?: boolean;
-  additiveFree?: boolean;
   imageUrl?: string;
   imageKeys?: string[];
   sources?: SourceLink[];

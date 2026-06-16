@@ -6,7 +6,7 @@ import { keys } from "./lib/keys.js";
 // moderateReview resolver: Claude reviews a community review and recommends
 // keep/flag for the human moderator. Read-only — it never changes state.
 
-const SYSTEM = `You moderate community reviews for a wine tasting app.
+const SYSTEM = `You moderate community reviews for a bourbon tasting app.
 Classify the review text. Return ONLY JSON: {"verdict":"ok"|"flag","reason":"short reason"}.
 Flag if the text is vulgar/profane, hateful, harassing, sexual, threatening, spam/advertising,
 or otherwise inappropriate for a public, all-ages product review. Otherwise "ok".

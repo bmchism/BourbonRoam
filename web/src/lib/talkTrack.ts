@@ -5,19 +5,19 @@ import type { Bottle } from "../types";
 
 export function hostScript(b: Bottle, pour: number, total: number): string[] {
   const lines: string[] = [];
-  const typeLabel = b.wineType.toLowerCase();
-  const vintageStr = b.vintage ? ` ${b.vintage}` : "";
+  const typeLabel = (b.style ?? b.expression).toLowerCase();
+  const ageStr = b.age ? ` (${b.age})` : "";
   lines.push(
-    `Pour ${pour} of ${total} — this is ${b.name}${vintageStr}, a ${typeLabel} from ${b.region}, at ${b.abv}%.`
+    `Pour ${pour} of ${total} — this is ${b.name}${ageStr}, a ${typeLabel} bourbon from ${b.region}, at ${b.abv}% (${b.proof} proof).`
   );
   if (b.story) lines.push(b.story);
-  if (b.mashBill && b.mashBill.length) {
-    lines.push(`Made from ${b.mashBill.join(", ")}${b.aging ? `, aged in ${b.aging.toLowerCase()}` : ""}.`);
+  if (b.mashBill) {
+    lines.push(`Mash bill: ${b.mashBill}${b.aging ? `, ${b.aging.toLowerCase()}` : ""}.`);
   }
   const nose = b.aromas.slice(0, 3).join(", ");
   const palate = b.flavors.slice(0, 3).join(", ");
   if (nose) lines.push(`On the nose, hunt for ${nose}. On the palate, look for ${palate}.`);
-  lines.push(`Pour about two ounces each. Don't rush it — let's taste together.`);
+  lines.push(`Pour about an ounce each, neat. Don't rush it — let's taste together.`);
   return lines;
 }
 
@@ -31,10 +31,10 @@ export interface RitualStep {
 
 export function ritualSteps(b: Bottle): RitualStep[] {
   return [
-    { key: "look", emoji: "👁️", title: "Appearance", say: "Tilt the glass over a white surface. Note the color intensity and hue — is it pale or deep? Purple-rimmed or garnet?" },
-    { key: "swirl", emoji: "🌀", title: "Swirl", say: "Give it a gentle swirl and watch the legs slide down. Thicker, slower legs hint at body and alcohol." },
-    { key: "smell", emoji: "👃", title: "Nose", say: "Cup the glass and take a slow sniff with lips slightly parted. Can you find these?", hunt: b.aromas.slice(0, 5) },
-    { key: "sip", emoji: "👅", title: "Palate", say: "Take a sip and let it coat your whole mouth. Notice sweetness, acidity, tannin, and body.", hunt: b.flavors.slice(0, 5) },
+    { key: "look", emoji: "👁️", title: "Appearance", say: "Hold the glass to the light. Note the color — pale gold to deep mahogany hints at age and barrel interaction." },
+    { key: "swirl", emoji: "🌀", title: "Legs", say: "Give it a gentle swirl and watch the legs slide down. Thicker, slower legs hint at body and proof." },
+    { key: "smell", emoji: "👃", title: "Nose", say: "Hold the glass below your chin, mouth slightly open, then slowly raise it. Can you find these?", hunt: b.aromas.slice(0, 5) },
+    { key: "sip", emoji: "👅", title: "Palate", say: "Take a small sip and let it coat your whole mouth — sweetness up front, spice on the sides, oak at the back.", hunt: b.flavors.slice(0, 5) },
     { key: "finish", emoji: "⏱️", title: "Finish", say: "Now wait. How long does the flavor linger — short and clean, or long and complex?" },
   ];
 }

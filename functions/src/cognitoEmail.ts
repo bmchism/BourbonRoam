@@ -32,10 +32,10 @@ function copyFor(trigger: string, code: string) {
   const isReset = trigger.includes("ForgotPassword");
   const heading = isReset ? "Reset your password" : "Confirm your email";
   const line = isReset
-    ? "Use this code to reset your Wine Roam password:"
-    : "Welcome to Wine Roam! Use this code to confirm your email:";
+    ? "Use this code to reset your Bourbon Roam password:"
+    : "Welcome to Bourbon Roam! Use this code to confirm your email:";
   return {
-    subject: isReset ? "Reset your Wine Roam password" : "Confirm your Wine Roam account",
+    subject: isReset ? "Reset your Bourbon Roam password" : "Confirm your Bourbon Roam account",
     html: `<div style="font-family:sans-serif;line-height:1.5">
       <h2 style="font-family:Georgia,serif">${heading}</h2>
       <p>${line}</p>

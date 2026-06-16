@@ -47,14 +47,14 @@ export const articles: LearnArticle[] = [
 
 export const articleBySlug = (slug: string) => articles.find((a) => a.slug === slug);
 
-export interface StyleGuide { wineType: string; description: string; profile: string; accent: string; }
-export const wineTypeGuides: StyleGuide[] = [
-  { wineType: "Straight", description: "Aged 2+ years in new charred oak, no additives", profile: "Classic bourbon — caramel, vanilla, oak, corn sweetness.", accent: "#B5651D" },
-  { wineType: "Single Barrel", description: "One barrel, hand-selected, unique character", profile: "Individual and bold — no two are exactly alike.", accent: "#8C4A2F" },
-  { wineType: "Small Batch", description: "Select barrels blended for a premium profile", profile: "Balanced and refined — the distiller's art of blending.", accent: "#A66A33" },
-  { wineType: "Bottled-in-Bond", description: "100 proof, single distillery, single season, 4+ years", profile: "The gold standard — guaranteed quality and provenance.", accent: "#C28A3D" },
-  { wineType: "Wheated", description: "Wheat replaces rye — softer, sweeter mash bill", profile: "Round and approachable — honey, toffee, soft spice.", accent: "#D4A574" },
-  { wineType: "High Rye", description: "Extra rye grain for bold spice and complexity", profile: "Spicy and assertive — pepper, cinnamon, dried fruit.", accent: "#9E5A2A" },
-  { wineType: "Barrel Proof", description: "No water added — straight from cask at full strength", profile: "Intense and concentrated — dilute to your preference.", accent: "#6B3A1F" },
-  { wineType: "Rye", description: "At least 51% rye grain — bourbon's spicier sibling", profile: "Peppery, herbal, drier — the cocktail king.", accent: "#5E4B3B" },
+export interface StyleGuide { style: string; description: string; profile: string; accent: string; }
+export const styleGuides: StyleGuide[] = [
+  { style: "Straight", description: "Aged 2+ years in new charred oak, no additives", profile: "Classic bourbon — caramel, vanilla, oak, corn sweetness.", accent: "#B5651D" },
+  { style: "Single Barrel", description: "One barrel, hand-selected, unique character", profile: "Individual and bold — no two are exactly alike.", accent: "#8C4A2F" },
+  { style: "Small Batch", description: "Select barrels blended for a premium profile", profile: "Balanced and refined — the distiller's art of blending.", accent: "#A66A33" },
+  { style: "Bottled-in-Bond", description: "100 proof, single distillery, single season, 4+ years", profile: "The gold standard — guaranteed quality and provenance.", accent: "#C28A3D" },
+  { style: "Wheated", description: "Wheat replaces rye — softer, sweeter mash bill", profile: "Round and approachable — honey, toffee, soft spice.", accent: "#D4A574" },
+  { style: "High Rye", description: "Extra rye grain for bold spice and complexity", profile: "Spicy and assertive — pepper, cinnamon, dried fruit.", accent: "#9E5A2A" },
+  { style: "Barrel Proof", description: "No water added — straight from cask at full strength", profile: "Intense and concentrated — dilute to your preference.", accent: "#6B3A1F" },
+  { style: "Rye", description: "At least 51% rye grain — bourbon's spicier sibling", profile: "Peppery, herbal, drier — the cocktail king.", accent: "#5E4B3B" },
 ];

@@ -172,7 +172,7 @@ export default function HostLive() {
             </div>
             {bottle && (
               <div className="card">
-                <div className="muted" style={{ fontSize: 14 }}>{bottle.wineType} · {bottle.producer} · {bottle.abv}%</div>
+                <div className="muted" style={{ fontSize: 14 }}>{bottle.style} · {bottle.producer} · {bottle.abv}%</div>
                 <div className="bar-row" style={{ marginTop: 12 }}>
                   <span className="bar-name">Table</span>
                   <span className="bar-track"><span className="bar-fill" style={{ width: `${avg * 10}%`, background: bottle.accent }} /></span>

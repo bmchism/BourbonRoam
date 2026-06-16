@@ -19,7 +19,7 @@ export function track(event: AnalyticsEvent, path?: string) {
 }
 
 const STATIC_PAGES = new Set([
-  "/", "/home", "/learn", "/learn/process", "/learn/wineries", "/catalog",
+  "/", "/home", "/learn", "/learn/process", "/learn/distilleries", "/catalog",
   "/scan", "/tastings", "/tastings/build", "/shared", "/profile", "/admin",
   "/about", "/faq", "/privacy", "/terms", "/responsible", "/contact",
 ]);
@@ -29,7 +29,7 @@ const STATIC_PAGES = new Set([
 export function pageKey(pathname: string): string {
   const p = pathname.replace(/\/+$/, "") || "/";
   if (/^\/bottle\/[^/]+$/.test(p)) return "/bottle/:id";
-  if (/^\/winery\/[^/]+$/.test(p)) return "/winery/:id";
+  if (/^\/distillery\/[^/]+$/.test(p)) return "/distillery/:id";
   if (/^\/flight\/[^/]+$/.test(p)) return "/flight/:id";
   if (/^\/host\/[^/]+$/.test(p)) return "/host/:id";
   if (/^\/join\/[^/]+$/.test(p)) return "/join/:code";

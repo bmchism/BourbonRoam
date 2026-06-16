@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import { WineMark, BookIcon, CameraIcon, UsersIcon, GlassIcon } from "../icons";
+import { BottleMark, BookIcon, CameraIcon, UsersIcon, GlassIcon } from "../icons";
 import AuthForm from "../components/AuthForm";
 import LegalFooter from "../components/LegalFooter";
 import { useAuth } from "../lib/auth";
 
-// Vineyard hero image (Wikimedia Commons, CC).
+// Bourbon barrel / rickhouse hero image.
 const HERO_IMG =
-  "https://images.unsplash.com/photo-1560493676-04071c5f467b?w=1100&q=80&auto=format";
+  "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?w=1100&q=80&auto=format";
 
 // Positioned as a group activity first — the app is the excuse to gather.
 const OCCASIONS = [
@@ -18,9 +18,9 @@ const OCCASIONS = [
 ];
 
 const FEATURES = [
-  { Icon: BookIcon, title: "Learn about Wine", body: "Grape varieties, regions, tasting technique — no snobbery required.", c: "#5c7a5a", c2: "#3a5438" },
+  { Icon: BookIcon, title: "Learn about Bourbon", body: "Mash bills, distilleries, tasting technique — no snobbery required.", c: "#5c7a5a", c2: "#3a5438" },
   { Icon: UsersIcon, title: "Host live tastings", body: "Everyone joins by QR on their phones, rates each pour together, and scores reveal at once.", c: "#722F37", c2: "#4a1c22" },
-  { Icon: GlassIcon, title: "Score & quiz", body: "Rate appearance, nose, palate, and finish — then a quick quiz crowns the night's sommelier.", c: "#5E8C7D", c2: "#3c6457" },
+  { Icon: GlassIcon, title: "Score & quiz", body: "Rate appearance, nose, palate, and finish — then a quick quiz crowns the night's whiskey expert.", c: "#5E8C7D", c2: "#3c6457" },
   { Icon: CameraIcon, title: "Scan any bottle", body: "Snap a label to pull up its full profile and drop it straight into your flight.", c: "#9AA7B2", c2: "#6b7a85" },
 ];
 
@@ -46,13 +46,13 @@ export default function Landing() {
         <div className="land-hero-photo">
           <img
             src={HERO_IMG}
-            alt="Vineyard rows stretching to the horizon at golden hour"
+            alt="Bourbon barrels aging in a rickhouse at golden hour"
             loading="eager"
             onError={(e) => (e.currentTarget.closest(".land-hero-photo") as HTMLElement)?.classList.add("noimg")}
           />
         </div>
         <div className="land-hero-overlay">
-          <div className="land-mark"><WineMark size={30} /> <span>Bourbon Roam</span></div>
+          <div className="land-mark"><BottleMark size={30} /> <span>Bourbon Roam</span></div>
           <motion.h1 initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15, duration: 0.45 }}>
             Learn it.<br />Taste it.<br />Host it.
           </motion.h1>

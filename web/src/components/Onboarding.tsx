@@ -6,8 +6,8 @@ import { AnimatePresence, motion } from "framer-motion";
 const KEY = "bourbon.onboarded.v1";
 
 const STEPS = [
-  { emoji: "🍇", title: "Explore world wines", body: "Browse wines by type, region, and producer. We highlight organic, biodynamic, and natural wines — look for the green badge." },
-  { emoji: "📷", title: "Scan any bottle", body: "Point your camera at a label to identify it instantly and pull its full profile — region, grapes, and tasting notes, cached for next time." },
+  { emoji: "🥃", title: "Explore great bourbons", body: "Browse bottles by style, region, and distillery — from everyday pours to Bottled-in-Bond classics. Look for the badge on Bottled-in-Bond expressions." },
+  { emoji: "📷", title: "Scan any bottle", body: "Point your camera at a label to identify it instantly and pull its full profile — distillery, mash bill, and tasting notes, cached for next time." },
   { emoji: "🥂", title: "Build & host a tasting", body: "Assemble a flight, run a guided tasting solo, or host friends live with a QR code, shared ratings, and a quiz. Keep notes as you go." },
 ];
 

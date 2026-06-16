@@ -18,18 +18,18 @@ export default function About() {
           aroma, palate, and finish — then test what everyone learned with a quiz.
         </p>
 
-        <div className="section-head"><span className="kicker">Why we built it</span><h2>Organic, demystified</h2></div>
+        <div className="section-head"><span className="kicker">Why we built it</span><h2>Bourbon, demystified</h2></div>
         <p>
-          Great wine is grape, water, time, and craft — nothing hidden. We focus
-          on <strong>organic</strong> expressions and make it easy to learn how
-          each bottle is made, what sets it apart, and how to taste it like you mean
-          it. No snobbery, no gatekeeping — just a better night around the glass.
+          Great bourbon is grain, water, time, and new charred oak — nothing hidden. We make it
+          easy to learn how each bottle is made, what sets it apart, and how to taste it like you
+          mean it — from everyday pours to <strong>Bottled-in-Bond</strong> classics.
+          No snobbery, no gatekeeping — just a better night around the glass.
         </p>
 
         <div className="section-head"><span className="kicker">How it works</span><h2>Learn it. Taste it. Host it.</h2></div>
         <ul className="info-list">
-          <li><strong>Learn</strong> — how wine is made and what makes each pour different.</li>
-          <li><strong>Taste</strong> — guided flights that score color, aroma, palate, and finish.</li>
+          <li><strong>Learn</strong> — how bourbon is made and what makes each pour different.</li>
+          <li><strong>Taste</strong> — guided flights that score appearance, nose, palate, and finish.</li>
           <li><strong>Host</strong> — friends join by QR on their phones, rate together, then take the quiz.</li>
           <li><strong>Keep</strong> — private notes on every bottle, synced across your devices.</li>
         </ul>

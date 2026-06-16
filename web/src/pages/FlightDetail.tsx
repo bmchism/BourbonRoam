@@ -118,7 +118,7 @@ export default function FlightDetail() {
                   <span className="pn" style={{ background: b.accent }}>{i + 1}</span>
                   <span style={{ minWidth: 0, flex: 1 }}>
                     <div className="pnm">{b.name}</div>
-                    <div className="psub">{b.wineType}{b.vintage ? ` ${b.vintage}` : ""} · {b.region} · {b.abv}%</div>
+                    <div className="psub">{b.style ?? b.expression}{b.age ? ` ${b.age}` : ""} · {b.region} · {b.abv}%</div>
                   </span>
                 </Link>
                 <div style={{ display: "flex", flexDirection: "column" }}>

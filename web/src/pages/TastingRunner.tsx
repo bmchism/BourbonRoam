@@ -69,9 +69,9 @@ export default function TastingRunner() {
 
         <motion.div key={bottle.id} className="hero" style={{ background: `linear-gradient(150deg, ${bottle.accent}, ${shade(bottle.accent)})` }}
           initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}>
-          <span className="pill" style={{ background: "rgba(255,255,255,.22)" }}><span className="dot" />{bottle.wineType}</span>
+          <span className="pill" style={{ background: "rgba(255,255,255,.22)" }}><span className="dot" />{bottle.style}</span>
           <div className="brand">{bottle.name}</div>
-          <div className="nom">{bottle.producer} · {bottle.abv}% · {bottle.region}</div>
+          <div className="hero-sub">{bottle.producer} · {bottle.abv}% · {bottle.region}</div>
         </motion.div>
         <Link to={`/bottle/${bottle.id}`} className="linklike" style={{ display: "block", margin: "10px auto 0", textAlign: "center" }}>
           View bottle details →

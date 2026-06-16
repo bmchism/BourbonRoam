@@ -1,4 +1,4 @@
-// Wine flavor vocabulary + a tappable chip wheel. Used by the tasting
+// Bourbon flavor vocabulary + a tappable chip wheel. Used by the tasting
 // guide (Learn) and the notes/review editor (quick-add flavors).
 export interface FlavorGroup {
   label: string;
@@ -6,18 +6,16 @@ export interface FlavorGroup {
   notes: string[];
 }
 export const FLAVOR_GROUPS: FlavorGroup[] = [
-  { label: "Red Fruit", color: "#C0392B", notes: ["Cherry", "Raspberry", "Strawberry", "Cranberry", "Pomegranate"] },
-  { label: "Dark Fruit", color: "#6C3461", notes: ["Blackberry", "Plum", "Cassis", "Blueberry", "Fig"] },
-  { label: "Citrus", color: "#C9A24B", notes: ["Lemon", "Lime", "Grapefruit", "Orange Peel", "Mandarin"] },
-  { label: "Tropical", color: "#E67E22", notes: ["Passionfruit", "Pineapple", "Mango", "Lychee", "Guava"] },
-  { label: "Stone Fruit", color: "#F5B041", notes: ["Peach", "Apricot", "Nectarine", "Plum"] },
-  { label: "Floral", color: "#E8A0BF", notes: ["Rose", "Violet", "Jasmine", "Elderflower", "Blossom"] },
-  { label: "Herbal", color: "#5c7a5a", notes: ["Mint", "Eucalyptus", "Thyme", "Sage", "Bay Leaf"] },
-  { label: "Spice", color: "#8B4513", notes: ["Black Pepper", "Cinnamon", "Clove", "Vanilla", "Nutmeg", "Licorice"] },
-  { label: "Earth", color: "#6B5D4A", notes: ["Leather", "Tobacco", "Truffle", "Mushroom", "Wet Stone", "Forest Floor"] },
-  { label: "Oak", color: "#A66A33", notes: ["Toast", "Cedar", "Smoke", "Coconut", "Butterscotch"] },
-  { label: "Mineral", color: "#9AA7B2", notes: ["Chalk", "Flint", "Slate", "Graphite", "Iron"] },
-  { label: "Other", color: "#897a63", notes: ["Honey", "Butter", "Cream", "Brioche", "Almond", "Hazelnut"] },
+  { label: "Caramel & Sweet", color: "#B5651D", notes: ["Caramel", "Brown Sugar", "Toffee", "Butterscotch", "Maple", "Molasses"] },
+  { label: "Vanilla & Cream", color: "#D4A574", notes: ["Vanilla", "Cream", "Custard", "Marshmallow", "Honey"] },
+  { label: "Oak & Wood", color: "#A66A33", notes: ["Charred Oak", "Toasted Oak", "Cedar", "Sawdust", "Tannin"] },
+  { label: "Grain", color: "#C28A3D", notes: ["Corn", "Rye Bread", "Biscuit", "Cereal", "Malt"] },
+  { label: "Spice", color: "#8B4513", notes: ["Cinnamon", "Black Pepper", "Clove", "Nutmeg", "Allspice", "Ginger"] },
+  { label: "Fruit", color: "#9E3A2A", notes: ["Cherry", "Dried Fig", "Orange Peel", "Apple", "Raisin", "Stone Fruit"] },
+  { label: "Nutty", color: "#897a63", notes: ["Almond", "Pecan", "Walnut", "Hazelnut", "Peanut"] },
+  { label: "Smoke & Char", color: "#5E4B3B", notes: ["Smoke", "Char", "Tobacco", "Espresso", "Dark Chocolate"] },
+  { label: "Floral & Herbal", color: "#7C8C5A", notes: ["Mint", "Rose", "Tea", "Eucalyptus", "Dried Herbs"] },
+  { label: "Earthy", color: "#6B5D4A", notes: ["Leather", "Tobacco Leaf", "Cocoa", "Earth"] },
 ];
 
 export const ALL_NOTES = FLAVOR_GROUPS.flatMap((g) => g.notes);

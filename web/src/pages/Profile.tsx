@@ -221,7 +221,7 @@ export default function Profile() {
             <div className="card stack">
               <div>
                 <div className="label">What's the occasion?</div>
-                <input className="field" value={remTitle} onChange={(e) => setRemTitle(e.target.value)} placeholder="e.g. Friday grape night" />
+                <input className="field" value={remTitle} onChange={(e) => setRemTitle(e.target.value)} placeholder="e.g. Friday bourbon night" />
               </div>
               <div>
                 <div className="label">When</div>

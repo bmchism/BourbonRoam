@@ -1,6 +1,6 @@
 import type { SourceLink } from "@agave/shared";
 
-// integrations: attach attributed deep-links to public wine references.
+// integrations: attach attributed deep-links to public bourbon references.
 // CLEAN posture (BUILD_PLAN): official APIs where they exist, otherwise a
 // linked, attributed search URL — never bulk-scraped content. Cached on the
 // bottle so this runs once per bottle.
@@ -8,17 +8,18 @@ import type { SourceLink } from "@agave/shared";
 export interface IntegrationsEvent {
   brand: string;
   name: string;
-  nom?: string;
+  distillery?: string;
 }
 
 const SOURCES = [
   {
-    label: "Wine Matchmaker",
-    base: "https://www.winematchmaker.com/search?q=",
+    label: "Bourbon Finder",
+    // Wine-Searcher's find endpoint also covers spirits/whiskey.
+    base: "https://www.wine-searcher.com/find/",
   },
   {
-    label: "The Wine Report",
-    base: "https://www.thewinereport.com/?s=",
+    label: "Whisky Advocate",
+    base: "https://www.whiskyadvocate.com/?s=",
   },
 ];
 

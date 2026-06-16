@@ -1,20 +1,22 @@
 import { describe, it, expect } from "vitest";
-import { cleanNom } from "../format";
+import { formatAge, cleanRegion } from "../format";
 
-describe("cleanNom", () => {
-  it("leaves a bare NOM number untouched", () => {
-    expect(cleanNom("1619")).toBe("1619");
+describe("formatAge", () => {
+  it("returns the age statement when present", () => {
+    expect(formatAge("10 Year")).toBe("10 Year");
   });
 
-  it("strips a 'NOM-' prefix", () => {
-    expect(cleanNom("NOM-1619")).toBe("1619");
-  });
-
-  it("strips a 'NOM ' prefix case-insensitively", () => {
-    expect(cleanNom("nom 1234")).toBe("1234");
+  it("returns NAS when absent", () => {
+    expect(formatAge()).toBe("NAS");
   });
 
   it("trims surrounding whitespace", () => {
-    expect(cleanNom("  1142 ")).toBe("1142");
+    expect(formatAge("  6 Year ")).toBe("6 Year");
+  });
+});
+
+describe("cleanRegion", () => {
+  it("trims surrounding whitespace", () => {
+    expect(cleanRegion("  Kentucky ")).toBe("Kentucky");
   });
 });

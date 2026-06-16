@@ -12,7 +12,7 @@ export default function Responsible() {
         </div>
 
         <p className="lead">
-          Bourbon Roam is about appreciating great wine — its craft, aroma, and
+          Bourbon Roam is about appreciating great bourbon — its craft, aroma, and
           flavor — not drinking a lot of it. A tasting is about small pours and paying
           attention, not volume.
         </p>
@@ -38,7 +38,7 @@ export default function Responsible() {
         </p>
 
         <p className="muted" style={{ marginTop: 16 }}>
-          Enjoy the grape. Take care of each other. 🌿
+          Enjoy the pour. Take care of each other. 🥃
         </p>
 
         <LegalFooter />

@@ -1,6 +1,6 @@
 export type BourbonStyle = "Straight" | "Single Barrel" | "Small Batch" | "Bottled-in-Bond" | "Wheated" | "High Rye" | "Barrel Proof" | "Rye";
 export type WineType = BourbonStyle;
-export interface TopWineSeed { producer: string; name: string; wineType: BourbonStyle; region?: string; country?: string; }
+export interface TopWineSeed { producer: string; name: string; style: BourbonStyle; region?: string; country?: string; }
 const S: BourbonStyle = "Straight"; const SB: BourbonStyle = "Single Barrel"; const SM: BourbonStyle = "Small Batch"; const BiB: BourbonStyle = "Bottled-in-Bond"; const W: BourbonStyle = "Wheated"; const HR: BourbonStyle = "High Rye"; const BP: BourbonStyle = "Barrel Proof"; const R: BourbonStyle = "Rye";
 interface ProducerRow { producer: string; country?: string; wines: { name: string; type: BourbonStyle; region?: string }[]; }
 const CATALOG: ProducerRow[] = [
@@ -47,5 +47,5 @@ const CATALOG: ProducerRow[] = [
   {producer:"Kentucky Owl",country:"USA",wines:[{name:"Kentucky Owl Confiscated",type:SM,region:"Kentucky"},{name:"Kentucky Owl Batch 12",type:SM,region:"Kentucky"}]},
   {producer:"Blue Run",country:"USA",wines:[{name:"Blue Run Kentucky Straight",type:S,region:"Kentucky"},{name:"Blue Run High Rye",type:HR,region:"Kentucky"}]},
 ];
-export const topWines: TopWineSeed[] = CATALOG.flatMap((row) => row.wines.map((w) => ({ producer: row.producer, name: w.name, wineType: w.type, region: w.region, country: row.country })));
+export const topWines: TopWineSeed[] = CATALOG.flatMap((row) => row.wines.map((w) => ({ producer: row.producer, name: w.name, style: w.type, region: w.region, country: row.country })));
 export const TOP_COUNT = topWines.length;

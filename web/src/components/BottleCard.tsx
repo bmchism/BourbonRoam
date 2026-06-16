@@ -7,9 +7,9 @@ import { ChevronRight } from "../icons";
 export default function BottleCard({ bottle, index = 0 }: { bottle: Bottle; index?: number }) {
   const imageUrl = bottle.imageKeys?.[0];
   const accent = bottle.accent || "#722F37";
-  const wineType = bottle.wineType || bottle.expression || "Red";
+  const style = bottle.style || bottle.expression || "Straight";
   const producer = bottle.producer || bottle.brand || "";
-  const region = bottle.region || bottle.grapeRegion || bottle.agaveRegion || "";
+  const region = bottle.region || "";
   const flavors = bottle.flavors ?? [];
 
   return (
@@ -25,12 +25,12 @@ export default function BottleCard({ bottle, index = 0 }: { bottle: Bottle; inde
           ) : (
             <BottleVisual name={producer} accent={accent} size={56} />
           )}
-          {bottle.organic && <span className="af-corner" title="Organic/Biodynamic" aria-label="Organic wine">🍇</span>}
+          {(bottle.style || bottle.expression) === "Bottled-in-Bond" && <span className="af-corner" title="Bottled-in-Bond" aria-label="Bottled-in-Bond">🏛️</span>}
         </div>
         <div className="body">
           <span className="pill" style={{ background: accent }}>
             <span className="dot" />
-            {wineType}
+            {style}
           </span>
           <h3 className="brand">{bottle.name}</h3>
           <div className="meta">

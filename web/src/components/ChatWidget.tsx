@@ -10,11 +10,11 @@ interface Msg {
 
 const GREETING: Msg = {
   role: "assistant",
-  content: "Cheers! I'm your bourbon guide. Ask me about a grape variety, a region, winemaking techniques, or what to pour at your next tasting.",
+  content: "Cheers! I'm your bourbon guide. Ask me about a mash bill, a distillery, how bourbon is aged, or what to pour at your next tasting.",
 };
 const SUGGESTIONS = [
-  "What's the difference between Old World and New World?",
-  "Best wines under $30?",
+  "What's the difference between wheated and high-rye bourbon?",
+  "Best bourbons under $30?",
   "Build me a 4-bottle flight",
 ];
 

@@ -5,15 +5,15 @@ import { useAuth } from "../lib/auth";
 import { loadProfile } from "../lib/profile";
 import { curatedFlights, bottlesForFlight } from "../data/flights";
 import { useBottlesReady } from "../lib/bottleStore";
-import { BookIcon, GlassIcon, UsersIcon, CameraIcon, WineMark, GrapeIcon } from "../icons";
+import { BookIcon, GlassIcon, UsersIcon, CameraIcon, BottleMark, BarrelIcon } from "../icons";
 
 const ACTIONS = [
   { to: "/catalog", title: "Explore Bourbons", sub: "Browse the collection", Icon: GlassIcon, c: "#722F37", c2: "#4a1c22", big: true },
   { to: "/tastings", title: "Host a Tasting", sub: "Build a flight, invite friends", Icon: UsersIcon, c: "#5c7a5a", c2: "#3a5438", big: true },
   { to: "/scan", title: "Scan a Bottle", sub: "Identify it instantly", Icon: CameraIcon, c: "#5E8C7D", c2: "#3c6457" },
-  { to: "/learn/process", title: "How It's Made", sub: "The winemaking journey", Icon: WineMark, c: "#A66A33", c2: "#79491f" },
-  { to: "/learn/wineries", title: "Wineries", sub: "Meet the producers", Icon: GrapeIcon, c: "#8A6D3B", c2: "#5f4a24" },
-  { to: "/learn", title: "Learn the Basics", sub: "Wine 101", Icon: BookIcon, c: "#9AA7B2", c2: "#6b7a85" },
+  { to: "/learn/process", title: "How It's Made", sub: "The grain-to-glass journey", Icon: BottleMark, c: "#A66A33", c2: "#79491f" },
+  { to: "/learn/distilleries", title: "Distilleries", sub: "Meet the producers", Icon: BarrelIcon, c: "#8A6D3B", c2: "#5f4a24" },
+  { to: "/learn", title: "Learn the Basics", sub: "Bourbon 101", Icon: BookIcon, c: "#9AA7B2", c2: "#6b7a85" },
 ];
 
 const HERO = "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=1000&q=80&auto=format";

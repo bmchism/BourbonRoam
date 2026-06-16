@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
-import { WineMark } from "../icons";
+import { BottleMark } from "../icons";
 import { appBack, crumbTrail } from "../lib/nav";
 import { useAuth } from "../lib/auth";
 
@@ -25,7 +25,7 @@ export default function AppBar({
   const { user, signOut } = useAuth();
   const brand = !back && title === "Bourbon Roam";
   // Breadcrumbs only for signed-in users: every crumb above a guest tasting page
-  // (Home, Tastings, Wines…) is account-gated, so a guest tap just dead-ends at
+  // (Home, Tastings, Bottles…) is account-gated, so a guest tap just dead-ends at
   // the login screen. Guests navigate with the back button instead.
   const crumbs = back && user ? crumbTrail(pathname, title === "Bourbon Roam" ? undefined : title) : [];
 
@@ -45,7 +45,7 @@ export default function AppBar({
           <>
             {!back && (
               <Link to="/home" aria-label="Home" style={{ display: "flex" }}>
-                <WineMark className="mark" />
+                <BottleMark className="mark" />
               </Link>
             )}
             <h1>{title}</h1>

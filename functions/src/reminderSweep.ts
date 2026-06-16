@@ -57,7 +57,7 @@ interface Reminder {
   phone?: string | null;
 }
 
-const APP_ORIGIN = process.env.APP_ORIGIN || "https://wine.roamthrough.com";
+const APP_ORIGIN = process.env.APP_ORIGIN || "https://bourbon.roamthrough.com";
 
 export const handler = async (): Promise<{ sent: number }> => {
   const now = new Date().toISOString();
@@ -73,18 +73,18 @@ export const handler = async (): Promise<{ sent: number }> => {
       jobs.push(
         sendEmail({
           to: r.email,
-          subject: `🌿 ${r.title}`,
+          subject: `🥃 ${r.title}`,
           html: `<div style="font-family:sans-serif;line-height:1.5">
             <h2 style="font-family:Georgia,serif">${escapeHtml(r.title)}</h2>
             <p>${escapeHtml(r.message)}</p>
-            <p><a href="${APP_ORIGIN}/tastings" style="background:#B5651D;color:#fff;padding:12px 20px;border-radius:999px;text-decoration:none;display:inline-block">Open Wine Roam →</a></p>
+            <p><a href="${APP_ORIGIN}/tastings" style="background:#B5651D;color:#fff;padding:12px 20px;border-radius:999px;text-decoration:none;display:inline-block">Open Bourbon Roam →</a></p>
           </div>`,
           text: `${r.title}\n\n${r.message}\n\n${APP_ORIGIN}/tastings`,
         })
       );
     }
     if (wantSms && r.phone) {
-      jobs.push(sendSms({ to: r.phone, body: `🌿 ${r.title}: ${r.message} — ${APP_ORIGIN}/tastings` }));
+      jobs.push(sendSms({ to: r.phone, body: `🥃 ${r.title}: ${r.message} — ${APP_ORIGIN}/tastings` }));
     }
 
     let delivered = false;

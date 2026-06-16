@@ -139,7 +139,7 @@ function Leaderboard({
             <motion.span className="bar-fill" style={{ background: "var(--amber)" }} initial={{ width: 0 }} animate={{ width: `${pct}%` }} transition={{ duration: 0.8, ease: "easeOut", delay: 0.25 }} />
           </span>
           <div className="muted" style={{ fontSize: 13, marginTop: 8 }}>
-            {pct === 100 ? "Perfect — you know your wine. 🍷" : pct >= 60 ? "Nicely done." : "A reason for another round."}
+            {pct === 100 ? "Perfect — you know your bourbon. 🥃" : pct >= 60 ? "Nicely done." : "A reason for another round."}
           </div>
         </div>
         <button className="btn block" style={{ marginTop: 18 }} onClick={onReplay}>

@@ -2,22 +2,22 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import AppBar from "./AppBar";
-import { articleBySlug, wineTypeGuides } from "../data/learn";
+import { articleBySlug, styleGuides } from "../data/learn";
 
-// Rich, interactive version of the "How to Taste Wine" article. Text comes
+// Rich, interactive version of the "How to Taste Bourbon" article. Text comes
 // from learn.ts (single source); this adds visuals + interactivity on top.
 
-const STEP_ICONS = ["🥃", "🍸", "👁️", "👃", "👅"]; // pour, glass, look, smell, taste
-const STEP_TINTS = ["#7FA15A", "#C9A24B", "#9AA7B2", "#C28A3D", "#B5654D"];
+const STEP_ICONS = ["🥃", "👁️", "👃", "👅", "⏱️", "💧"]; // set up, look, nose, taste, finish, add water
+const STEP_TINTS = ["#7FA15A", "#9AA7B2", "#C28A3D", "#B5654D", "#8C4A2F", "#5E8C7D"];
 
 import { FLAVOR_GROUPS as FLAVORS } from "./FlavorWheel";
 
 const GLASSES = [
-  { emoji: "🥃", name: "Copita / Glencairn", verdict: "best", note: "Narrow rim funnels aroma straight to your nose." },
-  { emoji: "🍷", name: "Tulip wine glass", verdict: "ok", note: "Works in a pinch — concentrates aroma reasonably well." },
-  { emoji: "🧪", name: "Caballito (shot)", verdict: "avoid", note: "Built for shots, not tasting. Skip it." },
+  { emoji: "🥃", name: "Glencairn / Copita", verdict: "best", note: "Tulip bowl and narrow rim funnel aroma straight to your nose — the bourbon standard." },
+  { emoji: "🍷", name: "Tulip snifter", verdict: "ok", note: "Works in a pinch — concentrates aroma reasonably well." },
+  { emoji: "🥃", name: "Rocks / shot glass", verdict: "avoid", note: "Built for cocktails and shots, not nosing. Skip it for tasting." },
 ];
-const V_COLOR: Record<string, string> = { best: "var(--agave-deep)", ok: "var(--amber)", avoid: "#a3392f" };
+const V_COLOR: Record<string, string> = { best: "var(--bourbon-deep)", ok: "var(--amber)", avoid: "#a3392f" };
 const V_BG: Record<string, string> = { best: "#e9f0e4", ok: "#fdeede", avoid: "#fcefec" };
 const V_LABEL: Record<string, string> = { best: "Best", ok: "OK", avoid: "Avoid" };
 
@@ -34,11 +34,11 @@ function Photo({ file, alt }: { file: string; alt: string }) {
 }
 
 export default function TastingGuide() {
-  const a = articleBySlug("how-to-taste-wine")!;
-  const steps = a.sections.slice(0, 5); // Pour, Glass, Look, Smell, Taste
-  const profiles = a.sections.find((s) => s.heading.startsWith("Flavor"));
-  const additives = a.sections.find((s) => s.heading.startsWith("Spotting"));
-  const notesSection = a.sections.find((s) => s.heading.startsWith("Score"));
+  const a = articleBySlug("how-to-taste-bourbon")!;
+  const steps = a.sections.slice(0, 6); // Set up, Look, Nose, Taste, Finish, Add water
+  const profiles = a.sections.find((s) => s.heading === "Nose");
+  const additives = a.sections.find((s) => s.heading === "Add water");
+  const notesSection = a.sections.find((s) => s.heading === "Finish");
 
   const [picked, setPicked] = useState<Set<string>>(new Set());
   const toggle = (n: string) =>
@@ -51,7 +51,7 @@ export default function TastingGuide() {
         {/* Hero */}
         <div className="tg-hero">
           <div className="tg-photo">
-            <Photo file="Vignoble_de_Lavaux_en_automne.jpg" alt="Vineyard landscape" />
+            <Photo file="Bourbon_barrels_aging.jpg" alt="Bourbon barrels aging in a rickhouse" />
           </div>
           <div className="tg-hero-text">
             <span className="kicker">Do a tasting</span>
@@ -61,7 +61,7 @@ export default function TastingGuide() {
         </div>
 
         {/* The ritual — illustrated steps */}
-        <div className="section-head"><span className="kicker">Five steps</span><h2>The Ritual</h2></div>
+        <div className="section-head"><span className="kicker">Six steps</span><h2>The Ritual</h2></div>
         <div className="tg-steps">
           {steps.map((s, i) => (
             <motion.div
@@ -87,19 +87,19 @@ export default function TastingGuide() {
         {/* Color -> aging interactive strip */}
         <div className="section-head"><span className="kicker">What the color tells you</span><h2>Read the Pour</h2></div>
         <div className="tg-colorstrip">
-          {wineTypeGuides.map((g) => (
-            <div className="tg-swatch" key={g.wineType} style={{ ["--sw" as string]: g.accent }}>
+          {styleGuides.map((g) => (
+            <div className="tg-swatch" key={g.style} style={{ ["--sw" as string]: g.accent }}>
               <span className="tg-swatch-chip" style={{ background: g.accent }} />
-              <span className="tg-swatch-name">{g.wineType}</span>
+              <span className="tg-swatch-name">{g.style}</span>
               <div className="tg-swatch-pop">
-                <strong>{g.wineType}</strong>
+                <strong>{g.style}</strong>
                 <span>{g.description}</span>
                 <em>{g.profile}</em>
               </div>
             </div>
           ))}
         </div>
-        <p className="muted tg-note">Tip: additive‑free añejos are often paler than mass brands that add caramel colour — don't judge richness by colour alone.</p>
+        <p className="muted tg-note">Tip: color comes from the barrel, not additives — bourbon can't be color-adjusted. A deep mahogany usually means more years or a hotter rickhouse spot, but don't judge richness by color alone.</p>
 
         {/* Glassware comparison */}
         <div className="section-head"><span className="kicker">Gear</span><h2>The Right Glass</h2></div>
@@ -148,7 +148,7 @@ export default function TastingGuide() {
         {/* Additives warning */}
         {additives && (
           <div className="tg-warn">
-            <div className="tg-warn-head">⚠ {additives.heading}</div>
+            <div className="tg-warn-head">💧 {additives.heading}</div>
             <p>{additives.body}</p>
           </div>
         )}

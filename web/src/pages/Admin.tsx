@@ -16,7 +16,7 @@ const shortModel = (m: string) => m.replace(/^claude-/, "").replace(/-\d{8}$/, "
 function modelDrivers(model: string): string {
   const m = model.toLowerCase();
   if (m.includes("haiku")) return "Bottle label enrichment (tier 1) · review moderation · catalog pre-warm";
-  if (m.includes("sonnet")) return "Wine assistant chat · post-tasting quiz generation";
+  if (m.includes("sonnet")) return "Bourbon assistant chat · post-tasting quiz generation";
   if (m.includes("opus")) return "Complex bottle enrichment (escalation when Haiku/Sonnet fall short)";
   return "Mixed app usage";
 }
@@ -160,7 +160,7 @@ function CostsPanel() {
           <span className="rate-val">{usd(spent)} / ${costs.budget}</span>
         </div>
         <span className="bar-track" style={{ marginTop: 8 }}>
-          <span className="bar-fill" style={{ width: `${Math.min(100, pct)}%`, background: pct > 80 ? "var(--amber)" : "var(--agave)" }} />
+          <span className="bar-fill" style={{ width: `${Math.min(100, pct)}%`, background: pct > 80 ? "var(--amber)" : "var(--bourbon)" }} />
         </span>
         <div className="muted" style={{ fontSize: 12.5, marginTop: 8 }}>{pct}% of monthly budget</div>
       </div>
@@ -173,7 +173,7 @@ function CostsPanel() {
           costs.awsByService.map((s) => (
             <div key={s.name} className="bar-row">
               <span className="bar-name" style={{ fontSize: 12.5 }}>{s.name.replace(/^Amazon |^AWS /, "")}</span>
-              <span className="bar-track"><span className="bar-fill" style={{ width: `${(s.amount / svcMax) * 100}%`, background: "var(--agave)" }} /></span>
+              <span className="bar-track"><span className="bar-fill" style={{ width: `${(s.amount / svcMax) * 100}%`, background: "var(--bourbon)" }} /></span>
               <span className="bar-score">{usd(s.amount)}</span>
             </div>
           ))
@@ -241,7 +241,7 @@ function CostsPanel() {
           costs.awsDaily.map((d) => (
             <div key={d.name} className="bar-row">
               <span className="bar-name" style={{ fontSize: 12.5 }}>{d.name.slice(5)}</span>
-              <span className="bar-track"><span className="bar-fill" style={{ width: `${(d.amount / dayMax) * 100}%`, background: "var(--agave)" }} /></span>
+              <span className="bar-track"><span className="bar-fill" style={{ width: `${(d.amount / dayMax) * 100}%`, background: "var(--bourbon)" }} /></span>
               <span className="bar-score">{usd(d.amount)}</span>
             </div>
           ))
@@ -341,7 +341,7 @@ function UsagePanel() {
           chart.map((d) => (
             <div key={d.day} className="bar-row">
               <span className="bar-name" style={{ fontSize: 12.5 }}>{d.day.slice(5)}</span>
-              <span className="bar-track"><span className="bar-fill" style={{ width: `${(d[metric] / max) * 100}%`, background: "var(--agave)" }} /></span>
+              <span className="bar-track"><span className="bar-fill" style={{ width: `${(d[metric] / max) * 100}%`, background: "var(--bourbon)" }} /></span>
               <span className="bar-score">{d[metric]}</span>
             </div>
           ))
@@ -452,7 +452,7 @@ function UsersPanel() {
                   </div>
                 </div>
                 <div style={{ display: "flex", gap: 6, alignItems: "center", flexShrink: 0 }}>
-                  {u.isAdmin && <span className="badge" style={{ background: "#e9f0e4", color: "var(--agave-deep)" }}>admin</span>}
+                  {u.isAdmin && <span className="badge" style={{ background: "#e9f0e4", color: "var(--bourbon-deep)" }}>admin</span>}
                   <span className="muted" style={{ fontSize: 13 }}>{isOpen ? "▴" : "▾"}</span>
                 </div>
               </div>
@@ -502,7 +502,7 @@ function UsersPanel() {
 
 const btn: React.CSSProperties = { marginLeft: 0, padding: "8px 12px", fontSize: 13 };
 
-const ALARM_COLOR = (s: string) => (s === "ALARM" ? "#b23b2c" : s === "OK" ? "var(--agave)" : "var(--amber)");
+const ALARM_COLOR = (s: string) => (s === "ALARM" ? "#b23b2c" : s === "OK" ? "var(--bourbon)" : "var(--amber)");
 const ALARM_LABEL = (s: string) => (s === "ALARM" ? "In alarm" : s === "OK" ? "OK" : "No data");
 
 function AlarmsPanel() {
@@ -611,7 +611,7 @@ function AuditPanel() {
             return (
               <div key={`${r.at}-${i}`} className="card">
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8 }}>
-                  <span className="badge" style={{ background: danger ? "#fcefec" : "#e9f0e4", color: danger ? "#b23b2c" : "var(--agave-deep)" }}>
+                  <span className="badge" style={{ background: danger ? "#fcefec" : "#e9f0e4", color: danger ? "#b23b2c" : "var(--bourbon-deep)" }}>
                     {ACTION_LABEL[r.action] ?? r.action}
                   </span>
                   <span className="muted" style={{ fontSize: 12 }}>{new Date(r.at).toLocaleString()}</span>
@@ -632,7 +632,7 @@ function AuditPanel() {
 
 const FB_COLOR: Record<string, { bg: string; fg: string }> = {
   Bug: { bg: "#fcefec", fg: "#b23b2c" },
-  Idea: { bg: "#e9f0e4", fg: "var(--agave-deep)" },
+  Idea: { bg: "#e9f0e4", fg: "var(--bourbon-deep)" },
   Praise: { bg: "#fdf2e3", fg: "var(--amber)" },
   Other: { bg: "#eee", fg: "var(--ink-soft)" },
 };
@@ -691,8 +691,8 @@ function FeedbackPanel() {
 
 const PAGE_LABELS: Record<string, string> = {
   "/": "Landing / Marketing", "/home": "Home", "/catalog": "Catalog", "/bottle/:id": "Bottle detail",
-  "/scan": "Scan", "/learn": "Learn", "/learn/process": "How it's made", "/learn/wineries": "Wineries",
-  "/learn/:slug": "Learn article", "/winery/:id": "Winery detail", "/tastings": "Tastings",
+  "/scan": "Scan", "/learn": "Learn", "/learn/process": "How it's made", "/learn/distilleries": "Distilleries",
+  "/learn/:slug": "Learn article", "/distillery/:id": "Distillery detail", "/tastings": "Tastings",
   "/tastings/build": "Flight builder", "/flight/:id": "Flight detail", "/taste/:id/setup": "Tasting setup",
   "/taste/:id": "Tasting runner", "/taste/:id/quiz": "Tasting quiz", "/taste/:id/recap": "Tasting recap",
   "/host/:id": "Live host", "/join/:code": "Guest join", "/shared": "Shared flight", "/profile": "Profile",
@@ -735,7 +735,7 @@ function PagesPanel() {
           {rows.map((r) => (
             <div key={r.page} className="bar-row">
               <span className="bar-name" style={{ fontSize: 12.5 }}>{PAGE_LABELS[r.page] ?? r.page}</span>
-              <span className="bar-track"><span className="bar-fill" style={{ width: `${(r.count / max) * 100}%`, background: "var(--agave)" }} /></span>
+              <span className="bar-track"><span className="bar-fill" style={{ width: `${(r.count / max) * 100}%`, background: "var(--bourbon)" }} /></span>
               <span className="bar-score">{r.count.toLocaleString()}</span>
             </div>
           ))}
@@ -832,7 +832,7 @@ function BottlesPanel() {
   if (all === null) return <div style={{ marginTop: 8 }}><SkeletonList rows={6} /></div>;
   const needle = q.trim().toLowerCase();
   const list = all
-    .filter((b) => !needle || `${b.name} ${b.wineryId}`.toLowerCase().includes(needle))
+    .filter((b) => !needle || `${b.name} ${b.distilleryId}`.toLowerCase().includes(needle))
     .sort((a, b) => Number(a.verified ?? false) - Number(b.verified ?? false))
     .slice(0, 60);
   const pending = all.filter((b) => !b.verified).length;
@@ -846,14 +846,14 @@ function BottlesPanel() {
           <div className="card" key={b.id}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
               <span style={{ fontWeight: 600 }}>{b.name}</span>
-              <span className="badge" style={b.verified ? { background: "#e9f0e4", color: "var(--agave-deep)" } : { background: "#fdeede", color: "var(--amber)" }}>{b.verified ? "verified" : "pending"}</span>
+              <span className="badge" style={b.verified ? { background: "#e9f0e4", color: "var(--bourbon-deep)" } : { background: "#fdeede", color: "var(--amber)" }}>{b.verified ? "verified" : "pending"}</span>
             </div>
-            <div className="muted" style={{ fontSize: 13, marginTop: 2 }}>{b.wineType} · {b.producer} · {b.abv}%{b.organic ? " · 🍇" : ""}</div>
+            <div className="muted" style={{ fontSize: 13, marginTop: 2 }}>{b.style ?? b.expression} · {b.producer ?? b.distillery} · {b.abv}%{(b.style ?? b.expression) === "Bottled-in-Bond" ? " · 🏛️" : ""}</div>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 10 }}>
               <button className="btn ghost" style={{ marginLeft: 0, padding: "8px 12px", fontSize: 13 }} disabled={busy === b.id} onClick={() => patch(b, { verified: !b.verified })}>{b.verified ? "Unverify" : "Verify ✓"}</button>
-              <button className="btn ghost" style={{ marginLeft: 0, padding: "8px 12px", fontSize: 13 }} disabled={busy === b.id} onClick={() => { const v = window.prompt("Winery ID:", b.wineryId); if (v) patch(b, { nom: v }); }}>Winery</button>
+              <button className="btn ghost" style={{ marginLeft: 0, padding: "8px 12px", fontSize: 13 }} disabled={busy === b.id} onClick={() => { const v = window.prompt("Distillery ID:", b.distilleryId); if (v) patch(b, { distilleryId: v }); }}>Distillery</button>
               <button className="btn ghost" style={{ marginLeft: 0, padding: "8px 12px", fontSize: 13 }} disabled={busy === b.id} onClick={() => { const v = window.prompt("ABV %:", String(b.abv)); if (v && !isNaN(+v)) patch(b, { abv: +v }); }}>ABV</button>
-              <button className="btn ghost" style={{ marginLeft: 0, padding: "8px 12px", fontSize: 13 }} disabled={busy === b.id} onClick={() => patch(b, { additiveFree: !b.organic })}>🍇 {b.organic ? "off" : "on"}</button>
+              <button className="btn ghost" style={{ marginLeft: 0, padding: "8px 12px", fontSize: 13 }} disabled={busy === b.id} onClick={() => { const v = window.prompt("Style:", b.style ?? b.expression); if (v) patch(b, { style: v }); }}>Style</button>
               <button className="btn ghost" style={{ marginLeft: 0, padding: "8px 12px", fontSize: 13, color: "#a3392f" }} disabled={busy === b.id} onClick={() => del(b)}>Delete</button>
             </div>
           </div>
@@ -914,13 +914,13 @@ function ModerationPanel() {
               </div>
               <p className="lead" style={{ margin: "6px 0 0", fontSize: 14.5 }}>{r.body}</p>
               {a && (
-                <div className="badge" style={{ marginTop: 10, background: flagged ? "#fcefec" : "#e9f0e4", color: flagged ? "#b23b2c" : "var(--agave-deep)" }}>
+                <div className="badge" style={{ marginTop: 10, background: flagged ? "#fcefec" : "#e9f0e4", color: flagged ? "#b23b2c" : "var(--bourbon-deep)" }}>
                   AI: {flagged ? "⚠ flag" : "✓ ok"} — {a.reason}
                 </div>
               )}
               <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
                 <button className="btn ghost" style={{ marginLeft: 0, flex: 1, padding: 10 }} disabled={busy === key(r)} onClick={() => check(r)}>AI check</button>
-                <button className="btn ghost" style={{ marginLeft: 0, flex: 1, padding: 10, color: "var(--agave-deep)" }} disabled={busy === key(r)} onClick={() => decide(r, "approve")}>Approve</button>
+                <button className="btn ghost" style={{ marginLeft: 0, flex: 1, padding: 10, color: "var(--bourbon-deep)" }} disabled={busy === key(r)} onClick={() => decide(r, "approve")}>Approve</button>
                 <button className="btn ghost" style={{ marginLeft: 0, flex: 1, padding: 10, color: "#a3392f" }} disabled={busy === key(r)} onClick={() => decide(r, "block")}>Block</button>
               </div>
             </div>

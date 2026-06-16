@@ -3,11 +3,11 @@ import AppBar from "../components/AppBar";
 import VideoEmbed from "../components/VideoEmbed";
 import { articles } from "../data/learn";
 import { PHOTOS } from "../data/process";
-import { wineTypeGuides } from "../data/learn";
+import { styleGuides } from "../data/learn";
 
 const VIDEOS = [
-  { id: "RMQQo2OEl10", title: "Wine Folly: Wine 101 — A Beginner's Guide" },
-  { id: "9BUNN_kYprQ", title: "WSET 3 Minute Wine School — How to Taste Wine" },
+  { id: "Wq3HvFCgTfk", title: "Bourbon 101 — A Beginner's Guide" },
+  { id: "8wBfStXP6PE", title: "How to Taste Bourbon Like a Pro" },
 ];
 
 export default function Learn() {
@@ -16,49 +16,49 @@ export default function Learn() {
       <AppBar title="Learn" back />
       <main className="screen">
         <div className="page-title">
-          <span className="kicker">Wine 101</span>
-          <h1>Learn the Vine</h1>
+          <span className="kicker">Bourbon 101</span>
+          <h1>Learn the Barrel</h1>
           <p>
-            What wine is, how it's made, and what sets each style apart —
+            What bourbon is, how it's made, and what sets each style apart —
             the foundation for a great tasting.
           </p>
         </div>
 
         <figure className="learn-hero">
           <img
-            src={PHOTOS.vineyard}
-            alt="Vineyard terraces in autumn"
+            src={PHOTOS.rickhouse}
+            alt="Bourbon barrels aging in a Kentucky rickhouse"
             loading="lazy"
             referrerPolicy="no-referrer"
             onError={(e) => { (e.currentTarget.closest("figure") as HTMLElement).style.display = "none"; }}
           />
-          <figcaption>Lavaux vineyard terraces · Wikimedia Commons (CC)</figcaption>
+          <figcaption>Bourbon barrels aging in a rickhouse</figcaption>
         </figure>
 
         <div className="section-head">
           <span className="kicker">Start here</span>
           <h2>How to Taste</h2>
         </div>
-        <Link to="/learn/how-to-taste-wine" className="journey-cta tap">
-          <div className="journey-scene" style={{ display: "grid", placeItems: "center", fontSize: 44 }}>🍷</div>
+        <Link to="/learn/how-to-taste-bourbon" className="journey-cta tap">
+          <div className="journey-scene" style={{ display: "grid", placeItems: "center", fontSize: 44 }}>🥃</div>
           <div className="journey-body">
-            <div className="journey-title">The WSET Tasting Method</div>
-            <p>Look, smell, taste, conclude — a structured approach to any glass of wine.</p>
+            <div className="journey-title">The Bourbon Tasting Method</div>
+            <p>Look, nose, taste, finish — a structured approach to any pour of bourbon.</p>
             <span className="journey-go">Learn to taste →</span>
           </div>
         </Link>
 
         <div className="section-head">
-          <span className="kicker">Wine styles</span>
-          <h2>The Six Types</h2>
+          <span className="kicker">Bourbon styles</span>
+          <h2>The Eight Styles</h2>
         </div>
         <div className="list">
-          {wineTypeGuides.map((e) => (
-            <div key={e.wineType} className="card">
+          {styleGuides.map((e) => (
+            <div key={e.style} className="card">
               <div className="exp-row">
                 <div className="swatch" style={{ background: e.accent }} />
                 <div>
-                  <div className="ttl">{e.wineType}</div>
+                  <div className="ttl">{e.style}</div>
                   <div className="ag">{e.description}</div>
                   <div className="pf">{e.profile}</div>
                 </div>
@@ -93,13 +93,13 @@ export default function Learn() {
 
         <div className="section-head">
           <span className="kicker">Deep dive</span>
-          <h2>How Wine Is Made</h2>
+          <h2>How Bourbon Is Made</h2>
         </div>
         <Link to="/learn/process" className="journey-cta tap">
-          <div className="journey-scene" style={{ display: "grid", placeItems: "center", fontSize: 44 }}>🍇</div>
+          <div className="journey-scene" style={{ display: "grid", placeItems: "center", fontSize: 44 }}>🛢️</div>
           <div className="journey-body">
             <div className="journey-title">The 8-stage journey</div>
-            <p>Vineyard to bottle — tap through an interactive, illustrated walkthrough of how wine is made.</p>
+            <p>Grain to glass — tap through an interactive, illustrated walkthrough of how bourbon is made.</p>
             <span className="journey-go">Start the journey →</span>
           </div>
         </Link>

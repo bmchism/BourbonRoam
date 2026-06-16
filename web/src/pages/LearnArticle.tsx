@@ -9,7 +9,7 @@ export default function LearnArticle() {
   if (!a) return <Navigate to="/learn" replace />;
 
   // The tasting how-to gets a dedicated rich, interactive layout.
-  if (slug === "how-to-taste-wine") return <TastingGuide />;
+  if (slug === "how-to-taste-bourbon") return <TastingGuide />;
 
   return (
     <>

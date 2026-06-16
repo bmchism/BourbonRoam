@@ -19,7 +19,7 @@ export interface TastingEntry {
   createdAt: string;
 }
 
-const KEY = "agave.history";
+const KEY = "bourbon.history";
 
 function loadLocal(): TastingEntry[] {
   try {

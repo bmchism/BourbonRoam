@@ -9,7 +9,7 @@ export const config = {
   userPoolId: import.meta.env.VITE_USER_POOL_ID ?? "",
   userPoolClientId: import.meta.env.VITE_USER_POOL_CLIENT_ID ?? "",
   uploadBucket: import.meta.env.VITE_UPLOAD_BUCKET ?? "",
-  // Cognito Hosted-UI domain (e.g. wine-roam.auth.us-east-1.amazoncognito.com).
+  // Cognito Hosted-UI domain (e.g. bourbon-roam.auth.us-east-1.amazoncognito.com).
   // Set once social login is live; enables the Google/Apple OAuth flow.
   cognitoDomain: import.meta.env.VITE_COGNITO_DOMAIN ?? "",
   // Which federated providers are live, comma-separated (e.g. "Google" or

@@ -4,7 +4,7 @@ import { useNavigate, useLocation, type NavigateFunction } from "react-router-do
 // Logical parent for each route — keeps "back" in-app on fresh/deep loads.
 export function parentOf(path: string): string {
   if (path.startsWith("/bottle/")) return "/catalog";
-  if (path.startsWith("/winery/")) return "/learn/wineries";
+  if (path.startsWith("/distillery/")) return "/learn/distilleries";
   if (path === "/scan") return "/catalog";
   if (path === "/catalog") return "/home";
   if (path.startsWith("/learn/")) return "/learn";
@@ -26,10 +26,10 @@ export function appBack(nav: NavigateFunction, pathname: string) {
 
 const LABELS: Record<string, string> = {
   "/home": "Home",
-  "/catalog": "Wines",
+  "/catalog": "Bottles",
   "/learn": "Learn",
   "/learn/process": "Process",
-  "/learn/wineries": "Wineries",
+  "/learn/distilleries": "Distilleries",
   "/tastings": "Tastings",
   "/tastings/build": "Build",
   "/profile": "Profile",
@@ -39,7 +39,7 @@ const LABELS: Record<string, string> = {
 export function labelFor(path: string): string {
   if (LABELS[path]) return LABELS[path];
   if (path.startsWith("/bottle/")) return "Bottle";
-  if (path.startsWith("/winery/")) return "Winery";
+  if (path.startsWith("/distillery/")) return "Distillery";
   if (path.startsWith("/learn/")) return "Article";
   if (path.startsWith("/flight/")) return "Flight";
   if (path.startsWith("/taste/")) return "Tasting";

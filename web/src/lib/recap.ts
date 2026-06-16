@@ -19,11 +19,11 @@ export function buildRecapHtml(flight: Flight, bottles: Bottle[], meta: RecapMet
         ? `Appearance ${r.color}/5 · Nose ${r.aroma}/5 · Palate ${r.flavor}/5 · Finish ${r.finish}/5 · <b>Overall ${r.overall}/10</b>`
         : "<i>not rated</i>";
       const note = r?.note ? `<div class="note">"${escapeHtml(r.note)}"</div>` : "";
-      const vintageStr = b.vintage ? ` ${b.vintage}` : "";
+      const ageStr = b.age ? ` ${b.age}` : "";
       return `<div class="pour">
         <div class="ph"><span class="pn" style="background:${b.accent}">${i + 1}</span>
           <div><div class="bn">${escapeHtml(b.name)}</div>
-          <div class="meta">${b.wineType}${vintageStr} · ${b.region} · ${b.abv}%</div></div></div>
+          <div class="meta">${b.style ?? b.expression}${ageStr} · ${b.region} · ${b.abv}%</div></div></div>
         <div class="sc">${scores}</div>${note}
       </div>`;
     })

@@ -1,4 +1,4 @@
-// Stylized wine-bottle illustration shown when a bottle has no photo.
+// Stylized bourbon-bottle illustration shown when a bottle has no photo.
 // Original + trademark-safe (a generic bottle silhouette + brand initials),
 // tinted by the expression accent so the catalog feels finished and vibrant.
 function shade(hex: string, amt = -30) {

@@ -22,24 +22,24 @@ interface OneResult {
 
 export const one = async (entry: TopWineSeed): Promise<OneResult> => {
   try {
-    // Map wine seed fields to enrich hint format
+    // Map seed fields to enrich hint format
     const brand = entry.producer;
-    const expression = entry.wineType as any;
-    const wineName = entry.name;
-    
+    const expression = entry.style as any;
+    const bottleName = entry.name;
+
     const bottle = await enrich({
-      hint: { brand: `${brand} - ${wineName}`, expression, nom: entry.region },
+      hint: { brand: `${brand} - ${bottleName}`, expression, distillery: entry.region },
     });
     return {
       brand,
-      expression: entry.wineType,
+      expression: entry.style,
       status: "enriched",
       bottleId: bottle.id,
     };
   } catch (err) {
     return {
       brand: entry.producer,
-      expression: entry.wineType,
+      expression: entry.style,
       status: "error",
       error: (err as Error).message,
     };

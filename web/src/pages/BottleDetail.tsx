@@ -9,7 +9,7 @@ import Disclaimer from "../components/Disclaimer";
 import { getBottle, uploadBottlePhoto, setBottleImageUrl } from "../lib/api";
 
 import { isApiConfigured } from "../lib/config";
-import { wineries } from "../data/wineries";
+import { distilleries } from "../data/distilleries";
 import { isFavorite, toggleFavorite } from "../lib/favorites";
 import { listMyShelf, setShelf as setShelfApi, bottlePopularity, type ShelfStatus } from "../lib/api";
 import BottleCard from "../components/BottleCard";
@@ -136,7 +136,7 @@ export default function BottleDetail() {
       </>
     );
   if (!bottle) return <Navigate to="/catalog" replace />;
-  const winery = wineries[bottle.wineryId];
+  const distillery = bottle.distilleryId ? distilleries[bottle.distilleryId] : undefined;
 
   return (
     <>
@@ -219,11 +219,11 @@ export default function BottleDetail() {
         >
           <span className="pill" style={{ background: "rgba(255,255,255,.22)" }}>
             <span className="dot" />
-            {bottle.wineType}
+            {bottle.style ?? bottle.expression}
           </span>
           <div className="brand">{bottle.name}</div>
-          <div className="nom">
-            {winery?.name ?? bottle.producer} · {bottle.region}
+          <div className="hero-sub">
+            {distillery?.name ?? bottle.distillery ?? bottle.producer} · {bottle.region}
           </div>
           <div className="stat-row">
             <div className="stat">
@@ -231,18 +231,18 @@ export default function BottleDetail() {
               <div className="l">{bottle.proof} proof</div>
             </div>
             <div className="stat">
-              <div className="n">{bottle.distillation ?? "—"}</div>
-              <div className="l">Distilled</div>
+              <div className="n">{bottle.age ?? "NAS"}</div>
+              <div className="l">Age</div>
             </div>
             <div className="stat">
-              <div className="n">{bottle.crushing?.split(",")[0] ?? "—"}</div>
-              <div className="l">Crush</div>
+              <div className="n">{bottle.charLevel?.split(" ")[0] ?? "—"}</div>
+              <div className="l">Char</div>
             </div>
           </div>
         </motion.div>
 
         <div style={{ display: "flex", gap: 8, marginTop: 12, flexWrap: "wrap", alignItems: "center" }}>
-          {bottle.organic && <AfBadge size="md" asLink />}
+          {(bottle.style ?? bottle.expression) === "Bottled-in-Bond" && <AfBadge size="md" asLink />}
           {bottle.verified === false && (
             <span className="badge" style={{ background: "#fdeede", color: "var(--amber)" }}>
               Pending review
@@ -287,11 +287,11 @@ export default function BottleDetail() {
         </div>
         <div className="spec-grid">
           <Spec k="Region" v={bottle.region} />
+          <Spec k="Mash bill" v={bottle.mashBill} />
           <Spec k="Water" v={bottle.waterSource} />
-          <Spec k="Cooking" v={bottle.cooking} />
-          <Spec k="Crushing" v={bottle.crushing} />
           <Spec k="Still" v={bottle.stillType} />
           <Spec k="Distillation" v={bottle.distillation} />
+          <Spec k="Char level" v={bottle.charLevel} />
           <Spec k="Fermentation" v={bottle.fermentation} full />
           <Spec k="Aging" v={bottle.aging} full />
         </div>
@@ -310,20 +310,20 @@ export default function BottleDetail() {
           </>
         )}
 
-        {winery && (winery?.masterDistiller || winery?.mashBill) && (
+        {distillery && (distillery?.masterDistiller || bottle.mashBill) && (
           <div className="card" style={{ marginTop: 12 }}>
-            <span className="kicker">Winery</span>
+            <span className="kicker">Distillery</span>
             <h3 style={{ fontFamily: "var(--serif)", margin: "6px 0 6px" }}>
-              {winery.name}
+              {distillery.name}
             </h3>
-            {winery?.masterDistiller && (
+            {distillery?.masterDistiller && (
               <p className="muted" style={{ margin: "0 0 4px", fontSize: 14 }}>
-                Winemaker: {winery?.masterDistiller}
+                Master distiller: {distillery?.masterDistiller}
               </p>
             )}
-            {winery?.mashBill && (
+            {bottle.mashBill && (
               <p className="muted" style={{ margin: 0, fontSize: 14 }}>
-                Key grapes: {winery?.mashBill.join(", ")}
+                Mash bill: {bottle.mashBill}
               </p>
             )}
           </div>
@@ -333,8 +333,8 @@ export default function BottleDetail() {
 
         <div className="section-head"><span className="kicker">Find a bottle</span><h2>Where to Buy</h2></div>
         <div className="card stack">
-          <a className="btn ghost block" href={`https://www.wine-searcher.com/find/${encodeURIComponent(bottle.name)}`} target="_blank" rel="noopener noreferrer" style={{ textAlign: "center" }}>🔎 Search Wine‑Searcher</a>
-          <a className="btn ghost block" href={`https://www.google.com/search?tbm=shop&q=${encodeURIComponent(bottle.name + " wine")}`} target="_blank" rel="noopener noreferrer" style={{ textAlign: "center" }}>🛒 Compare on Google Shopping</a>
+          <a className="btn ghost block" href={`https://www.wine-searcher.com/find/${encodeURIComponent(bottle.name)}`} target="_blank" rel="noopener noreferrer" style={{ textAlign: "center" }}>🔎 Search prices</a>
+          <a className="btn ghost block" href={`https://www.google.com/search?tbm=shop&q=${encodeURIComponent(bottle.name + " bourbon")}`} target="_blank" rel="noopener noreferrer" style={{ textAlign: "center" }}>🛒 Compare on Google Shopping</a>
           <div className="muted" style={{ fontSize: 12 }}>Live search — prices and availability vary by region.</div>
         </div>
 

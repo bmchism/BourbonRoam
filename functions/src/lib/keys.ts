@@ -6,7 +6,7 @@ export const TABLE = process.env.TABLE_NAME ?? "AgaveTable";
 export const keys = {
   bottle: (id: string) => ({ PK: `BOTTLE#${id}`, SK: "#META" }),
   bottleList: () => ({ gsi1pk: "BOTTLE" }),
-  // Cache pointer: normalized "NOM#brand" (or label hash) -> bottleId. Permanent.
+  // Cache pointer: normalized "distillery#brand" (or label hash) -> bottleId. Permanent.
   cache: (cacheKey: string) => ({ PK: `CACHE#${cacheKey}`, SK: "#PTR" }),
 
   session: (sessionId: string) => ({ PK: `SESSION#${sessionId}`, SK: "#META" }),
@@ -62,7 +62,7 @@ export const keys = {
   analytics: (day: string) => ({ PK: "ANALYTICS", SK: day }),
 };
 
-// Normalize a brand/NOM pair into a stable cache key.
-export function cacheKeyFor(nom: string, brand: string): string {
-  return `${nom}#${brand}`.toLowerCase().replace(/\s+/g, "-");
+// Normalize a distillery/brand pair into a stable cache key.
+export function cacheKeyFor(distillery: string, brand: string): string {
+  return `${distillery}#${brand}`.toLowerCase().replace(/\s+/g, "-");
 }

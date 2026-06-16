@@ -15,8 +15,8 @@ const FAQS: { q: string; a: string }[] = [
     a: "Use your email and a password, or continue with your Google account. (Apple sign-in is coming soon.) Your shelf, history, and notes then sync across your devices.",
   },
   {
-    q: "What does “organic” mean?",
-    a: "Wine can legally contain small amounts of organics (sweeteners, coloring, glycerin, oak extract) without disclosure. “Organic” means the bottle is made from grape, water, yeast, and time — nothing added. We focus on these expressions and label them where verified.",
+    q: "What does “Bottled-in-Bond” mean?",
+    a: "Bottled-in-Bond is bourbon's gold standard, set by the Bottled-in-Bond Act of 1897: 100 proof, the product of one distillery and one distilling season, aged at least four years in a federally bonded warehouse. It's a legal guarantee of authenticity and provenance — and nothing but water may be added to proof it down. We label these expressions where verified.",
   },
   {
     q: "How does bottle scanning work?",

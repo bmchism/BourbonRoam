@@ -1,5 +1,5 @@
 import type { Distillery } from "../types";
-export const wineries: Record<string, Distillery> = {
+export const distilleries: Record<string, Distillery> = {
   "buffalo-trace-distillery": { id: "buffalo-trace-distillery", name: "Buffalo Trace Distillery", region: "Frankfort, Kentucky", country: "USA", masterDistiller: "Harlen Wheatley", notes: "One of America's oldest continuously operating distilleries. Home to Buffalo Trace, Eagle Rare, Blanton's, Weller, and Pappy Van Winkle." },
   "makers-mark-distillery": { id: "makers-mark-distillery", name: "Maker's Mark Distillery", region: "Loretto, Kentucky", country: "USA", masterDistiller: "Denny Potter", notes: "National Historic Landmark. Hand-dipped red wax seal. Wheated mash bill using soft red winter wheat." },
   "woodford-reserve-distillery": { id: "woodford-reserve-distillery", name: "Woodford Reserve Distillery", region: "Versailles, Kentucky", country: "USA", masterDistiller: "Elizabeth McCall", notes: "Kentucky's smallest and oldest distillery. Uses copper pot stills and triple distillation — unique in bourbon." },
