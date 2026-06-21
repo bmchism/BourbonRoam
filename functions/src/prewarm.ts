@@ -1,4 +1,4 @@
-import { topWines, type TopWineSeed } from "@agave/seed";
+import { topBourbons, type TopWineSeed } from "@agave/seed";
 import { handler as enrich } from "./enrich.js";
 import { cachedBottle } from "./enrich.js";
 
@@ -9,7 +9,7 @@ import { cachedBottle } from "./enrich.js";
 export const list = async (event?: { offset?: number; limit?: number }): Promise<TopWineSeed[]> => {
   const offset = event?.offset ?? 0;
   const limit = event?.limit ?? 400;
-  return topWines.slice(offset, offset + limit);
+  return topBourbons.slice(offset, offset + limit);
 };
 
 interface OneResult {

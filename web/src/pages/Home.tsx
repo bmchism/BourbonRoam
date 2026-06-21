@@ -32,7 +32,7 @@ export default function Home() {
         {/* Photo hero with greeting */}
         <motion.div className="home-hero" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
           <div className="home-hero-photo">
-            <img src={HERO} alt="Vineyard rows at golden hour" loading="eager"
+            <img src={HERO} alt="Bourbon barrels in a rickhouse at golden hour" loading="eager"
               onError={(e) => { (e.currentTarget.closest(".home-hero-photo") as HTMLElement)?.classList.add("noimg"); }} />
           </div>
           <div className="home-hero-text">
